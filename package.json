@@ -1,0 +1,23 @@
+{
+  "name": "property_pro_lite_api",
+  "version": "1.0.0",
+  "description": "PropertyPro Lite is a platform where people can create and/or search properties for sale or rent.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RachealN/PropertyPro-lite-API.git"
+  },
+  "author": "Namaara Racheal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RachealN/PropertyPro-lite-API/issues"
+  },
+  "homepage": "https://github.com/RachealN/PropertyPro-lite-API#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
