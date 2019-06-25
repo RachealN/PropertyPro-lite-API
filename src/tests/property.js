@@ -52,3 +52,14 @@ describe('mark property as sold',() =>{
     });
 });
 
+describe('delete a property advert',() =>{
+    it('should return a delete advert',() =>{
+        chai.request(server)
+        .delete('/api/property/:id')
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(200);
+        });
+    });
+});
+
