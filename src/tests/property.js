@@ -30,3 +30,14 @@ describe('create a new property advert',() =>{
     });
 });
 
+describe('view a specific property advert',() =>{
+    it('should return a specific property advert', () =>{
+        chai.request(server)
+        .get('/api/property/:id')
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(200);
+        });
+    });
+});
+

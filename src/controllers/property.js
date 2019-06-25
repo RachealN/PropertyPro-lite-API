@@ -40,6 +40,21 @@ class PropertyController{
                 };
 
     }
+
+    static viewSpecificProperty(req,res){
+        const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
+
+        if(!view_id){
+            return{
+                "status":404,
+                "message":"Id not found"
+            };
+        }
+        return{
+            "status":200,
+            "data":view_id
+        }
+    }
 }
 
 module.exports = PropertyController

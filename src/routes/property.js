@@ -13,5 +13,9 @@ router.post('/api/property',(req,res) =>{
     res.status(201).json(PropertyController.postProperty(req));
 });
 
+router.get('/api/property/:id',(req,res) =>{
+    res.json(PropertyController.viewSpecificProperty(req));
+});
+
 
 module.exports= router;
