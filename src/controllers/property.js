@@ -80,6 +80,25 @@ class PropertyController{
     }
 }
 
+    static deleteProperty(req,res){
+        const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
+    if(!view_id){
+        return{
+            "status":400,
+            "Error":"Property_id not found"
+        };
+    }
+    const index = propertyArray.indexOf(view_id);
+    propertyArray.splice(index,1);
+    return{
+        "status":200,
+        "message":"deleted succesfully",
+        "data":view_id,
+        
+        
+    };
+    }
+
     
 }
 

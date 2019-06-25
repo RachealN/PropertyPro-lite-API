@@ -21,5 +21,9 @@ router.patch('/api/property/:id/sold',(req,res) =>{
     res.status(201).json(PropertyController.markProperty(req));
 });
 
+router.delete('/api/property/:id',(req,res) =>{
+    res.json(PropertyController.deleteProperty(req));
+});
+
 
 module.exports= router;
