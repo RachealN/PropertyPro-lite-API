@@ -18,3 +18,15 @@ describe('view all properties', () =>{
     });
 });
 
+describe('create a new property advert',() =>{
+    it('should return a new property advert created',() =>{
+        chai.request(server)
+        .post('/api/property')
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(201);
+
+        });
+    });
+});
+
