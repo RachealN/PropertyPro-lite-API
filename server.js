@@ -1,6 +1,8 @@
 const routes = require('./src/routes/property')
 const resolveSoa = require('dns')
 const express = require('express')
+const moment = require("moment");
+const uuid = require("uuid");
 const bodyParser = require("body-parser");
 
 const app = express()

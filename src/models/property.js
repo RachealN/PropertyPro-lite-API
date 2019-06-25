@@ -2,7 +2,7 @@ const propertyArray = []
 
 class Properties{
     constructor({
-        propertyId,
+        Id,
         owner,
         status,
         price,
@@ -13,7 +13,7 @@ class Properties{
         created_on,
         image_url
     }){
-        this.propertyId = propertyId;
+        this.Id = Id;
         this.owner = owner;
         this.status = status;
         this.price = price;
