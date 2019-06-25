@@ -15,6 +15,13 @@ class Validations{
         };
     return Joi.validate(postData,schema);
     }
+
+    markValidation(markData){
+        const schema ={
+            status:Joi.string().min(4).required()
+        };
+    return Joi.validate(markData,schema);
+    }
 }
 
 const validate = new Validations();

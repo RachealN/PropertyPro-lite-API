@@ -41,3 +41,14 @@ describe('view a specific property advert',() =>{
     });
 });
 
+describe('mark property as sold',() =>{
+    it('should return a property marked as sold',() =>{
+        chai.request(server)
+        .patch('/api/property/:id/sold')
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(201);
+        });
+    });
+});
+

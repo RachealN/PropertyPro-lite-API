@@ -17,5 +17,9 @@ router.get('/api/property/:id',(req,res) =>{
     res.json(PropertyController.viewSpecificProperty(req));
 });
 
+router.patch('/api/property/:id/sold',(req,res) =>{
+    res.status(201).json(PropertyController.markProperty(req));
+});
+
 
 module.exports= router;
