@@ -12,13 +12,13 @@ class PropertyController{
     static postProperty(req,res){
 
         const {error} = Validations.postValidation(req.body);
-		if(error){
-		return {
-            "status":400,
-            "message":error.details[0].message  
-                };
-                    
-            }
+        if(error){
+            return {
+                "status":400,
+                "message":error.details[0].message  
+                    };
+                        
+                }
         const data = new Properties({
             Id:propertyArray.length + 1,
             owner:propertyArray.length + 1,
@@ -55,6 +55,32 @@ class PropertyController{
             "data":view_id
         }
     }
+
+    static  markProperty(req,res){
+        const {error} = Validations.markValidation(req.body);
+        if(error){
+            return {
+                "status":400,
+                "message":error.details[0].message  
+                    };
+                        
+                }
+        const Property = propertyArray.find(check_id =>check_id.Id === parseInt(req.params.id));
+
+        if(Property){
+            (Property.status = req.body.status)
+            return{
+                "status":200,
+                "data":Property
+            };
+        }
+    return{
+        "status":"Error",
+        "Error":"property_id not found"
+    }
+}
+
+    
 }
 
 module.exports = PropertyController
