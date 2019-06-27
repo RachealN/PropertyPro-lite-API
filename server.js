@@ -1,4 +1,4 @@
-const routes = require('./src/routes/property')
+const routes = require('./src/routes/routes')
 const resolveSoa = require('dns')
 const express = require('express')
 const moment = require("moment");

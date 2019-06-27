@@ -36,15 +36,46 @@ class UserController{
 			userArray.push(newUser);
 			const token = jwt.sign({newUser}, "heymaynameisracheal",{  expiresIn: 1440 });
 			return [{
-				"status":201,
-				"success":"true",
-				"message":" successfully registered",
-				newUser,token
+				"status":"Success",
+				"data":newUser,token
+				
 				
 			}];
 
 		}
 
+    }
+    
+    static login(req,res){
+		const {error} = Validations.signinValidation(req.body);
+		if(error){
+			return {
+				"status":400,
+			  	"message":error.details[0].message  
+		  };
+			
+		}
+		const  {email,password}  =  req.body;
+		const user = userArray.find(e =>(email === e.email && password === e.password ));
+		if (user ){
+			const token = jwt.sign({user}, "heymaynameisracheal",{  expiresIn: 1440 });
+			return {
+                "status":"Success",
+                "data":user
+				
+			};
+		}else if(!user){
+			return {
+				"status":"Error",
+				"Error":"Authentication failed! You are not register in the system"
+			}
+
+		}else{
+            return{
+                "status":"error",
+                "Error":"wrong credetilas"
+            }
+        }
 	}
 
 
