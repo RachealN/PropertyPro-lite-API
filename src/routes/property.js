@@ -4,6 +4,7 @@ const router = express.Router();
 const app = express()
 
 const PropertyController = require('../controllers/property')
+const UserController = require('../controllers/user')
 
 router.get('/api/property',(req,res) =>{
     res.json(PropertyController.viewProperties(req));
@@ -29,6 +30,11 @@ router.delete('/api/property/:id',(req,res) =>{
 router.patch('/api/property/:id',(req,res) =>{
     res.status(201).json(PropertyController.updateProperty(req));
 });
+
+router.post('/api/auth/signUp',(req,res)=>{
+    res.status(201).json(UserController.signUp(req));
+});
+
 
 
 module.exports= router;

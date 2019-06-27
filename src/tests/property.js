@@ -74,3 +74,24 @@ describe('update property data',() =>{
     });
 });
 
+describe('signup a user',() =>{
+    it('should sign up user with valid credentials',() =>{
+        chai.request(server)
+        .post('/api/auth/signUp')
+        .send({
+            email:"racheal@gmail.com",
+            firstName:"Namaara",
+            lastName:"Racheal",
+            password:"hey@1234",
+            PhoneNumber:"0756789341",
+            kampala:"Kampala",
+            isAdmin:true
+
+        })
+        .end((err,res) =>{
+            chai.expect(res.statusCode).to.be.equal(201);
+            chai.expect(res.body).to.have.an('array');
+        });
+    });
+});
+

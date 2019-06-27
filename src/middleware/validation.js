@@ -17,10 +17,24 @@ class Validations{
     }
 
     markValidation(markData){
-        const schema ={
+        const schema = {
             status:Joi.string().min(4).required()
         };
     return Joi.validate(markData,schema);
+    }
+
+    signupValidation(signupData){
+        const schema = {
+            email: Joi.string().email().required(),
+            firstName: Joi.string().min(3).max(15).required(),
+            lastName: Joi.string().min(3).max(25).required(),
+            password: Joi.string().min(6).max(15).required(),
+            phoneNumber: Joi.number().positive().required(),
+            address: Joi.string().min(5).max(25).required(),
+            isAdmin:Joi.bool().valid(true, false).required(),
+
+        };
+        return Joi.validate(signupData,schema)
     }
 }
 
