@@ -63,3 +63,14 @@ describe('delete a property advert',() =>{
     });
 });
 
+describe('update property data',() =>{
+    it('should return updated data',() =>{
+        chai.request(server)
+        .patch('/api/property/:id')
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(201);
+        });
+    });
+});
+

@@ -99,7 +99,39 @@ class PropertyController{
     };
     }
 
+    static updateProperty(req,res){
+        const {error} = Validations.postValidation(req.body);
+        if(error){
+            return {
+                "status":400,
+                "message":error.details[0].message  
+                    };
+                        
+                }
+        const newProperty = propertyArray.find(check_id => check_id.Id ===parseInt(req.params.id));
+        
+        if(newProperty){
+            (newProperty.status = req.body.status, newProperty.price = req.body.price, newProperty.state = req.body.state,
+            newProperty.city = req.body.city, newProperty.address = req.body.address, newProperty.type = req.body.type,
+            newProperty.image_url = req.body.image_url)
+            
+
+            return{
+                "status":"success",
+                "data":newProperty
+            };
+        }
+        return{
+            "status":"Error",
+            "Error":"property_id not found"
+        }
+    }
+
     
 }
+
+
+
+
 
 module.exports = PropertyController

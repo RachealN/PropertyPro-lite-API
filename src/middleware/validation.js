@@ -5,7 +5,7 @@ const properties = require('../controllers/property');
 class Validations{
     postValidation(postData){
         const schema = {
-            status:Joi.string().min(3).required(),
+            status:Joi.string().min(4).required(),
             price:Joi.number().required(),
             state:Joi.string().min(3).required(),
             city:Joi.string().min(3).required(),
