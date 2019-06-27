@@ -35,6 +35,10 @@ router.post('/api/auth/signUp',(req,res)=>{
     res.status(201).json(UserController.signUp(req));
 });
 
+router.post('/api/auth/signIn',(req,res) =>{
+    res.status(201).json(UserController.login(req));
+});
+
 
 
 module.exports= router;
