@@ -77,6 +77,13 @@ class UserController{
             }
         }
 	}
+	static getUsers(req,res) {
+		return {
+			"status":"success",
+			"data":userArray
+		}
+
+	}
 
 
     }

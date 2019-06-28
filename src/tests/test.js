@@ -134,9 +134,21 @@ describe('verifyToken',() =>{
         .send(authToken)
         .end((err,res) =>{
             chai.expect(res.statusCode).to.be.equal(200);
-            chai.expect(res.body).to.be.an('object')
+            chai.expect(res.body).to.be.an('object');
+            chai.expect(res.type).to.be.equal('application/json');
             
         });
     });
 });
 
+describe('GET/api/users',() =>{
+    it('should return all users in the system', () =>{
+        chai.request(server)
+        .get('/api/users')
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(200);
+            chai.expect(res.type).to.be.equal('application/json');
+        });
+    });
+});

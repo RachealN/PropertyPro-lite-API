@@ -41,6 +41,10 @@ router.post('/api/auth/signIn',(req,res) =>{
     res.status(201).json(UserController.login(req));
 });
 
+router.get('/api/users',(req,res) =>{
+    res.json(UserController.getUsers(req));
+});
+
 
 
 module.exports= router;
