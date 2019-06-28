@@ -43,6 +43,15 @@ class Validations{
         };
         return Joi.validate(signinData,schema)
     }
+
+    editValidation(editData){
+        const schema = {
+            firstName: Joi.string().min(3).max(15).required(),
+            lastName: Joi.string().min(3).max(25).required(),
+            address: Joi.string().min(5).max(25).required(),
+        };
+        return Joi.validate(editData,schema)
+    }
 }
 
 const validate = new Validations();
