@@ -49,6 +49,10 @@ router.post('/api/users',(req,res) =>{
     res.status(201).json(UserController.createUser(req));
 });
 
+router.get('/api/users/:id',(req,res) =>{
+    res.json(UserController.getUser(req));
+});
+
 
 
 module.exports= router;

@@ -189,3 +189,14 @@ describe('POST/api/users',() =>{
         });
     });
 });
+
+describe(' GET/api/users/:id', () => {
+    it('should return a single user', () => {
+      chai.request(server)
+        .get('/api/users/:id')
+        .end((err, res) => {
+          chai.expect(res.body).to.be.a('object');
+          chai.expect(res.statusCode).to.be.equal(200);
+        });
+    });
+  });
