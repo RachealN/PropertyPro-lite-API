@@ -1,18 +1,18 @@
-const chai = require('chai')
-const chaiHttp = require('chai-http')
+const chai = require('chai');
+const chaiHttp = require('chai-http');
 const server = require('../../server');
+const {Users,userArray} = require('../models/user')
+const jwt = require('jsonwebtoken');
 
 const should = chai.should();
 const {expect} = chai.expect;
 
 chai.use(chaiHttp);
 
-const userCredentials = {
-	email:'racheal@gmail.com',
-	password:'hey@1234'
-}
+
 
 const authToken = 'dcgcajhacsah'
+const user = userArray.find(user => req.body.email === user.email);
 
 
 describe('GET/api/property', () =>{
@@ -115,6 +115,10 @@ describe('POST/api/auth/signUp',() =>{
 
 describe('POST/api/auth/signIn', () =>{
 	it('it should login  a user', () =>{
+        const userCredentials = {
+            email:'racheal@gmail.com',
+            password:'hey@1234'
+        }
 		chai.request(server)
 		.post('/api/auth/signIn')
 		.send(userCredentials)
@@ -128,18 +132,19 @@ describe('POST/api/auth/signIn', () =>{
 });
 
 describe('verifyToken',() =>{
-    it('should authorize the user', () =>{
+    it('it should respond with  authorisation header',function (done){
+        const token = jwt.sign({user}, "heymaynameisracheal",{  expiresIn: 1440 });
         chai.request(server)
-        .get('')
-        .send(authToken)
-        .end((err,res) =>{
-            chai.expect(res.statusCode).to.be.equal(200);
-            chai.expect(res.body).to.be.an('object');
-            chai.expect(res.type).to.be.equal('application/json');
-            
+        .get('/api/auth/signUp')
+        .set('Authorization',token)
+        .end(function(err,res){
+            chai.expect(res.body).to.be.a('object');
+            if(err) return done(err);
+            done();
         });
     });
 });
+
 
 describe('GET/api/users',() =>{
     it('should return all users in the system', () =>{
