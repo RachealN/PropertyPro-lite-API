@@ -85,6 +85,38 @@ class UserController{
 
 	}
 
+	static createUser(req,res){
+			const {error} = Validations.signupValidation(req.body);
+			if(error){
+				return {
+					"status":400,
+					"message":error.details[0].message  
+						};
+							
+					}
+		const data = new Users ({
+			Id:userArray.length + 1,
+			email:req.body.email,
+			firstName:req.body.firstName,
+			lastName:req.body.lastName,
+			password:req.body.password,
+			phoneNumber:req.body.phoneNumber,
+			address:req.body.address,
+			isAdmin:req.body.isAdmin
+			
+
+				});
+				
+		userArray.push(data);
+			return {
+				"status":"success",
+				"data":data
+				
+			};
+		}
+	
+	
+
 
     }
 
