@@ -57,6 +57,10 @@ router.delete('/api/users/:id',(req,res) =>{
     res.json(UserController.deleteUser(req));
 });
 
+router.put('/api/users/:id',(req,res) =>{
+    res.status(201).json(UserController.updateUser(req));
+});
+
 
 
 module.exports= router;

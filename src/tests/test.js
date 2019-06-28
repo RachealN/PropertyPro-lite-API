@@ -207,9 +207,20 @@ describe(' GET/api/users/:id', () => {
         .delete('/api/user/:id')
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
-            // chai.expect(res.statusCode).to.be.equal(200);
-            // chai.expect(res.type).to.be.equal('application/json');
+
         });
     });
 });
+
+describe('PUT/api/users/:id', () => {
+    it('should return updated user details', () => {
+      chai.request(server)
+        .get('/api/users/:id')
+        .send(signupCredentials)
+        .end((err, res) => {
+          chai.expect(res.body).to.be.a('object');
+          chai.expect(res.type).to.be.equal('application/json');
+        });
+    });
+  });
 
