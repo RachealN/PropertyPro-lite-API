@@ -129,6 +129,24 @@ class UserController{
 				"data":get_id
 			}
 			}
+
+			static deleteUser(req,res){
+				const get_id = userArray.find(check_id => check_id.Id === parseInt(req.params.id));
+			if (!get_id) {
+				return{
+					"status":"Error",
+					"Error":"userId not found"	
+				};
+			}
+				const index=userArray.indexOf(get_id);
+				userArray.splice(index,1);
+				return{
+					"status":"success",
+					"data":get_id
+				};
+		
+		
+			}
 	
 	
 
