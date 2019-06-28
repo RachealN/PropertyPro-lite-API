@@ -147,6 +147,36 @@ class UserController{
 		
 		
 			}
+
+			static updateUser(req,res){
+
+				const {error} = Validations.signupValidation(req.body);
+			if(error){
+				return {
+					"status":400,
+					"message":error.details[0].message  
+						};
+							
+					}
+				const newUser = userArray.find(check_id => check_id.Id===parseInt(req.params.id));
+				
+				if(newUser){
+					(newUser.email = req.body.email, newUser.firstName = req.body.firstName, newUser.lastName = req.body.lastName, newUser.password = req.body.password,
+						newUser.phoneNumber = req.body.phoneNumber, newUser.address = req.body.address, newUser.isAdmin = req.body.isAdmin)
+					return{
+					"status":"success",
+					"data":newUser
+			   };
+			}
+			return {
+				"status":"Error",
+				"Error":"user with that id is not found",
+		
+			}
+			}
+		
+		
+		
 	
 	
 
