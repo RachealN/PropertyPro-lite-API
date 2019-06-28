@@ -5,6 +5,8 @@ const app = express()
 
 const PropertyController = require('../controllers/property')
 const UserController = require('../controllers/user')
+const Authorization = require('../middleware/auth')
+
 
 router.get('/api/property',(req,res) =>{
     res.json(PropertyController.viewProperties(req));
