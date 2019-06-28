@@ -200,3 +200,16 @@ describe(' GET/api/users/:id', () => {
         });
     });
   });
+
+  describe('DELETE/api/users/:id',() =>{
+    it('should return a deleted user details',() =>{
+        chai.request(server)
+        .delete('/api/user/:id')
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            // chai.expect(res.statusCode).to.be.equal(200);
+            // chai.expect(res.type).to.be.equal('application/json');
+        });
+    });
+});
+

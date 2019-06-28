@@ -53,6 +53,10 @@ router.get('/api/users/:id',(req,res) =>{
     res.json(UserController.getUser(req));
 });
 
+router.delete('/api/users/:id',(req,res) =>{
+    res.json(UserController.deleteUser(req));
+});
+
 
 
 module.exports= router;
