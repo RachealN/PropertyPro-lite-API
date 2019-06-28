@@ -114,6 +114,21 @@ class UserController{
 				
 			};
 		}
+
+		static getUser(req,res){
+			const get_id = userArray.find(check_id => check_id.Id===parseInt(req.params.id));
+				
+				if(!get_id){
+					return{
+					"status":"Error",
+					"Error":"userId not found"
+			   };
+			}
+			   return {
+				"status":"success",
+				"data":get_id
+			}
+			}
 	
 	
 
