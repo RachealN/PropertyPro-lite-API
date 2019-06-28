@@ -12,7 +12,7 @@ const userCredentials = {
 	password:'hey@1234'
 }
 
-const token = 'dcgcajhacsah'
+const authToken = 'dcgcajhacsah'
 
 
 describe('GET/api/property', () =>{
@@ -125,5 +125,18 @@ describe('POST/api/auth/signIn', () =>{
 		});
 		
 	});
+});
+
+describe('verifyToken',() =>{
+    it('should authorize the user', () =>{
+        chai.request(server)
+        .get('')
+        .send(authToken)
+        .end((err,res) =>{
+            chai.expect(res.statusCode).to.be.equal(200);
+            chai.expect(res.body).to.be.an('object')
+            
+        });
+    });
 });
 
