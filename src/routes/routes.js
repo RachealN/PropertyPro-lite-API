@@ -61,6 +61,10 @@ router.put('/api/users/:id',(req,res) =>{
     res.status(201).json(UserController.updateUser(req));
 });
 
+router.patch('/api/users/:id',(req,res) =>{
+    res.status(201).json(UserController.patchUser(req));
+});
+
 
 
 module.exports= router;

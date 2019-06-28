@@ -36,6 +36,12 @@ const markDetails ={
     status:'sold'
 }
 
+const editDetails = {
+    firstName:'Namaara',
+    lastName:'Racheal',
+    address:'Kampala'
+}
+
 const authToken = 'dcgcajhacsah'
 const user = userArray.find(user => req.body.email === user.email);
 
@@ -217,6 +223,18 @@ describe('PUT/api/users/:id', () => {
       chai.request(server)
         .get('/api/users/:id')
         .send(signupCredentials)
+        .end((err, res) => {
+          chai.expect(res.body).to.be.a('object');
+          chai.expect(res.type).to.be.equal('application/json');
+        });
+    });
+  });
+
+  describe('PATCH/api/users/:id', () => {
+    it('should return patched/edited user details', () => {
+      chai.request(server)
+        .get('/api/users/:id')
+        .send(editDetails)
         .end((err, res) => {
           chai.expect(res.body).to.be.a('object');
           chai.expect(res.type).to.be.equal('application/json');
