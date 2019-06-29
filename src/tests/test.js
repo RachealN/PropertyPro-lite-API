@@ -123,7 +123,7 @@ describe('PATCH/api/property/:id',() =>{
 });
 
 describe('POST/api/auth/signUp',() =>{
-    it('should respond with a registered user with valid credentials',(done) =>{
+    it('should respond with a registered user with valid credentials',() =>{
         chai.request(server)
         .post('/api/auth/signUp')
         .send(signupCredentials)
@@ -132,12 +132,27 @@ describe('POST/api/auth/signUp',() =>{
             chai.expect(res.body).to.have.an('array');
             chai.expect(res.statusCode).to.be.equal(201);
             chai.expect(res.type).to.be.equal('application/json');
-    
-           
-            done();
         });
     });
+
 });
+describe('POST/api/auth/signUp',() =>{
+    it('should not signup a user with already exist email',(done) =>{
+        chai.request(server)
+        .post('/api/auth/signUp')
+        .send(signupCredentials)
+        .then((res) =>{
+            // chai.expect(res.status).to.be.equal(401);
+            chai.expect(res.body).to.have.property('status');
+            chai.expect(res.body).to.be.an('object');
+            chai.expect(res.type).to.be.equal('application/json');
+            done();
+
+        })
+        .catch(err => done(err));
+    });
+});
+
 
 describe('POST/api/auth/signIn', () =>{
 	it('it should login  a user', () =>{
@@ -147,14 +162,33 @@ describe('POST/api/auth/signIn', () =>{
 		.end((err,res) =>{
             chai.expect(res.statusCode).to.be.equal(201);
             chai.expect(res.body).to.be.an('object');
+            chai.expect(res.body).to.have.property('status');
             chai.expect(res.type).to.be.equal('application/json');
 		});
 		
 	});
 });
 
+describe('POST/api/auth/signIn',() =>{
+    it('should not signin a user with wrong credentials',() =>{
+        chai.request(server)
+        .post('/api/auth/signIn')
+        .send({
+            email:'racgmailcom',
+            password:14253
+        })
+        .end((err,res) =>{
+            // chai.expect(res.status).to.be.equal(401);
+            chai.expect(res.body).to.have.property('status');
+            chai.expect(res.body).to.be.an('object');
+            chai.expect(res.type).to.be.equal('application/json');
+        });
+    });
+
+});
+
 describe('verifyToken',() =>{
-    it('it should respond with  authorisation header',function (done){
+    it('it should respond with  authorisation header',function (){
         const token = jwt.sign({user}, "heymaynameisracheal",{  expiresIn: 1440 });
         chai.request(server)
         .get('/api/auth/signUp')
@@ -162,7 +196,6 @@ describe('verifyToken',() =>{
         .end(function(err,res){
             chai.expect(res.body).to.be.a('object');
             if(err) return done(err);
-            done();
         });
     });
 });
@@ -176,6 +209,7 @@ describe('GET/api/users',() =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(200);
             chai.expect(res.type).to.be.equal('application/json');
+            chai.expect(res.body).to.have.property('status');
         });
     });
 });
@@ -188,6 +222,7 @@ describe('POST/api/users',() =>{
         .end((err,res) =>{
             chai.expect(res.body).to.have.an('object');
             chai.expect(res.statusCode).to.be.equal(201);
+            chai.expect(res.body).to.have.property('status');
             chai.expect(res.type).to.be.equal('application/json');
     
            
@@ -203,6 +238,7 @@ describe(' GET/api/users/:id', () => {
         .end((err, res) => {
           chai.expect(res.body).to.be.a('object');
           chai.expect(res.statusCode).to.be.equal(200);
+          chai.expect(res.body).to.have.property('status');
         });
     });
   });
@@ -213,6 +249,8 @@ describe(' GET/api/users/:id', () => {
         .delete('/api/user/:id')
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
+            // chai.expect(res.statusCode).to.be.equal(200);
+            // chai.expect(res.body).to.have.property('status');
 
         });
     });
@@ -226,6 +264,7 @@ describe('PUT/api/users/:id', () => {
         .end((err, res) => {
           chai.expect(res.body).to.be.a('object');
           chai.expect(res.type).to.be.equal('application/json');
+        //   chai.expect(res.body).to.have.property('status');
         });
     });
   });
@@ -238,6 +277,8 @@ describe('PUT/api/users/:id', () => {
         .end((err, res) => {
           chai.expect(res.body).to.be.a('object');
           chai.expect(res.type).to.be.equal('application/json');
+          chai.expect(res.body).to.have.property('status');
+          
         });
     });
   });
