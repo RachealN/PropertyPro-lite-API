@@ -1,0 +1,11 @@
+language: node_js
+node_js: 
+   "10.7.0"
+before_script:
+  - 
+
+script:
+- npm run tests
+
+after_success:
+- npm run tests:coveralls
