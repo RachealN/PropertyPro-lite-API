@@ -1,4 +1,4 @@
-#PropertyPro Lite
+## PropertyPro Lite
 
 
 ## Badges
@@ -108,13 +108,14 @@ Run this command
 
 # Link to this project
 
-Heroku ```#```
+Heroku 
+https://propertypro-lite1.herokuapp.com/
 
 github
-```https://github.com/RachealN/PropertyPro-lite-API/tree/develop```
+https://github.com/RachealN/PropertyPro-lite-API/tree/develop
 
 live demo of this project(UI)
-```https://rachealn.github.io/PropertyPro-Lite-UI/```
+https://rachealn.github.io/PropertyPro-Lite-UI/
 
 
 # Author
