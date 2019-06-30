@@ -19,7 +19,7 @@ class PropertyController{
                     };
                         
                 }
-        const data = new Properties({
+        const property = new Properties({
             Id:propertyArray.length + 1,
             owner:propertyArray.length + 1,
             status:req.body.status,
@@ -32,10 +32,10 @@ class PropertyController{
             image_url:req.body.image_url
             
         });
-        propertyArray.push(data);
+        propertyArray.push(property);
                 return{
                     "status":"success",
-                    data
+                    "data":property
 
                 };
 
@@ -46,12 +46,12 @@ class PropertyController{
 
         if(!view_id){
             return{
-                "status":404,
-                "message":"Id not found"
+                "status":"error",
+                "Error":"Id not found"
             };
         }
         return{
-            "status":200,
+            "status":"success",
             "data":view_id
         }
     }
@@ -70,7 +70,7 @@ class PropertyController{
         if(Property){
             (Property.status = req.body.status)
             return{
-                "status":200,
+                "status":"success",
                 "data":Property
             };
         }
@@ -84,14 +84,14 @@ class PropertyController{
         const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
     if(!view_id){
         return{
-            "status":400,
+            "status":"error",
             "Error":"Property_id not found"
         };
     }
     const index = propertyArray.indexOf(view_id);
     propertyArray.splice(index,1);
     return{
-        "status":200,
+        "status":"success",
         "message":"deleted succesfully",
         "data":view_id,
         

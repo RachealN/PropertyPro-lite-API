@@ -53,7 +53,9 @@ describe('GET/api/property', () =>{
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(200);
+            chai.expect(res.body).to.have.property('status');
             chai.expect(res.type).to.be.equal('application/json');
+            
         });
     });
 });
@@ -66,6 +68,7 @@ describe('POST/api/property',() =>{
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(201);
+            chai.expect(res.body).to.have.property('status');
             chai.expect(res.type).to.be.equal('application/json');
 
         });
@@ -79,6 +82,7 @@ describe('GET/api/property/:id',() =>{
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(200);
+            chai.expect(res.body).to.have.property('status');
             chai.expect(res.type).to.be.equal('application/json');
         });
     });
@@ -92,6 +96,7 @@ describe('PATCH/api/property/:id/sold',() =>{
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(201);
+            chai.expect(res.body).to.have.property('status');
             chai.expect(res.type).to.be.equal('application/json');
         });
     });
@@ -104,6 +109,7 @@ describe('DELETE/api/property/:id',() =>{
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(200);
+            chai.expect(res.body).to.have.property('status');
             chai.expect(res.type).to.be.equal('application/json');
         });
     });
@@ -117,6 +123,7 @@ describe('PATCH/api/property/:id',() =>{
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(201);
+            chai.expect(res.body).to.have.property('status');
             chai.expect(res.type).to.be.equal('application/json');
         });
     });
