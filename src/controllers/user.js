@@ -16,7 +16,7 @@ class UserController{
                 }
         const userResult = userArray.find(user => req.body.email === user.email);
 		if(userResult) return{
-			"status":400,
+			"status":"Error",
 			"Error":"User with this email already exist"
 		};
 		
