@@ -42,7 +42,7 @@ const editDetails = {
     address:'Kampala'
 }
 
-const authToken = 'dcgcajhacsah'
+const token = 'dcgcajhacsah'
 const user = userArray.find(user => req.body.email === user.email);
 
 
@@ -50,6 +50,7 @@ describe('GET/api/property', () =>{
     it('should return all properties',() =>{
         chai.request(server)
         .get('/api/property')
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(200);
@@ -65,6 +66,7 @@ describe('POST/api/property',() =>{
         chai.request(server)
         .post('/api/property')
         .send(propertyDetails)
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(201);
@@ -79,6 +81,7 @@ describe('GET/api/property/:id',() =>{
     it('should return a specific property advert', () =>{
         chai.request(server)
         .get('/api/property/:id')
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(200);
@@ -92,6 +95,7 @@ describe('PATCH/api/property/:id/sold',() =>{
     it('should return a property marked as sold',() =>{
         chai.request(server)
         .patch('/api/property/:id/sold')
+        .set('Authorization', 'Bearer ' + token)
         .send(markDetails)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
@@ -106,6 +110,7 @@ describe('DELETE/api/property/:id',() =>{
     it('should return a deleted property advert',() =>{
         chai.request(server)
         .delete('/api/property/:id')
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(200);
@@ -120,6 +125,7 @@ describe('PATCH/api/property/:id',() =>{
         chai.request(server)
         .patch('/api/property/:id')
         .send(propertyDetails)
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(201);
@@ -134,8 +140,9 @@ describe('POST/api/auth/signUp',() =>{
         chai.request(server)
         .post('/api/auth/signUp')
         .send(signupCredentials)
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
-            
+            // chai.expect(res.body).to.have.property('token');
             chai.expect(res.body).to.have.an('array');
             chai.expect(res.statusCode).to.be.equal(201);
             chai.expect(res.type).to.be.equal('application/json');
@@ -147,9 +154,11 @@ describe('POST/api/auth/signUp',() =>{
     it('should not signup a user with already exist email',(done) =>{
         chai.request(server)
         .post('/api/auth/signUp')
+        .set('Authorization', 'Bearer ' + token)
         .send(signupCredentials)
         .then((res) =>{
             // chai.expect(res.status).to.be.equal(401);
+
             chai.expect(res.body).to.have.property('status');
             chai.expect(res.body).to.be.an('object');
             chai.expect(res.type).to.be.equal('application/json');
@@ -199,7 +208,7 @@ describe('verifyToken',() =>{
         const token = jwt.sign({user}, "heymaynameisracheal",{  expiresIn: 1440 });
         chai.request(server)
         .get('/api/auth/signUp')
-        .set('Authorization',authToken)
+        .set('Authorization', 'Bearer ' + token)
         .end(function(err,res){
             chai.expect(res.body).to.be.a('object');
             if(err) return done(err);
@@ -212,11 +221,13 @@ describe('GET/api/users',() =>{
     it('should return all users in the system', () =>{
         chai.request(server)
         .get('/api/users')
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             chai.expect(res.statusCode).to.be.equal(200);
             chai.expect(res.type).to.be.equal('application/json');
             chai.expect(res.body).to.have.property('status');
+            
         });
     });
 });
@@ -226,6 +237,7 @@ describe('POST/api/users',() =>{
         chai.request(server)
         .post('/api/users')
         .send(signupCredentials)
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.have.an('object');
             chai.expect(res.statusCode).to.be.equal(201);
@@ -242,6 +254,7 @@ describe(' GET/api/users/:id', () => {
     it('should return a single user', () => {
       chai.request(server)
         .get('/api/users/:id')
+        .set('Authorization', 'Bearer ' + token)
         .end((err, res) => {
           chai.expect(res.body).to.be.a('object');
           chai.expect(res.statusCode).to.be.equal(200);
@@ -254,6 +267,7 @@ describe(' GET/api/users/:id', () => {
     it('should return a deleted user details',() =>{
         chai.request(server)
         .delete('/api/user/:id')
+        .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
             // chai.expect(res.statusCode).to.be.equal(200);
@@ -268,6 +282,7 @@ describe('PUT/api/users/:id', () => {
       chai.request(server)
         .get('/api/users/:id')
         .send(signupCredentials)
+        .set('Authorization', 'Bearer ' + token)
         .end((err, res) => {
           chai.expect(res.body).to.be.a('object');
           chai.expect(res.type).to.be.equal('application/json');
@@ -281,6 +296,7 @@ describe('PUT/api/users/:id', () => {
       chai.request(server)
         .get('/api/users/:id')
         .send(editDetails)
+        .set('Authorization', 'Bearer ' + token)
         .end((err, res) => {
           chai.expect(res.body).to.be.a('object');
           chai.expect(res.type).to.be.equal('application/json');

@@ -43,27 +43,27 @@ router.post('/api/auth/signIn',(req,res) =>{
     res.status(201).json(UserController.login(req));
 });
 
-router.get('/api/users',Authorization.requireAdmin,(req,res) =>{
+router.get('/api/users',Authorization.verifyToken,(req,res) =>{
     res.json(UserController.getUsers(req));
 });
 
-router.post('/api/users',Authorization.requireAdmin,(req,res) =>{
+router.post('/api/users',(req,res) =>{
     res.status(201).json(UserController.createUser(req));
 });
 
-router.get('/api/users/:id',Authorization.requireAdmin,(req,res) =>{
+router.get('/api/users/:id',(req,res) =>{
     res.json(UserController.getUser(req));
 });
 
-router.delete('/api/users/:id',Authorization.requireAdmin,(req,res) =>{
+router.delete('/api/users/:id',(req,res) =>{
     res.json(UserController.deleteUser(req));
 });
 
-router.put('/api/users/:id',Authorization.requireAdmin,(req,res) =>{
+router.put('/api/users/:id',(req,res) =>{
     res.status(201).json(UserController.updateUser(req));
 });
 
-router.patch('/api/users/:id',Authorization.requireAdmin,(req,res) =>{
+router.patch('/api/users/:id',(req,res) =>{
     res.status(201).json(UserController.patchUser(req));
 });
 
