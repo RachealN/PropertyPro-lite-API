@@ -3,6 +3,7 @@ const Joi = require('joi');
 const properties = require('../controllers/property');
 
 class Validations{
+    //validate post property details
     postValidation(postData){
         const schema = {
             status:Joi.string().min(4).required(),
@@ -15,14 +16,14 @@ class Validations{
         };
     return Joi.validate(postData,schema);
     }
-
+    //validate mark property as sold
     markValidation(markData){
         const schema = {
             status:Joi.string().min(4).required()
         };
     return Joi.validate(markData,schema);
     }
-
+    //validate user sign up credentials
     signupValidation(signupData){
         const schema = {
             email: Joi.string().email().required(),
@@ -36,6 +37,7 @@ class Validations{
         };
         return Joi.validate(signupData,schema)
     }
+    //logi login credentials
     signinValidation(signinData){
         const schema = {
             email: Joi.string().email().required(),
@@ -43,7 +45,7 @@ class Validations{
         };
         return Joi.validate(signinData,schema)
     }
-
+    //validate patch a user credentials
     editValidation(editData){
         const schema = {
             firstName: Joi.string().min(3).max(15).required(),

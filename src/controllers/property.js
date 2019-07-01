@@ -2,15 +2,16 @@ const {Properties,propertyArray} = require('../models/property')
 const Validations = require('../middleware/validation')
 
 class PropertyController{
+    //view all properties
     static viewProperties(req,res){
         return{
             "status":"success",
             "data":propertyArray
         };
     }
-
+    //create a new property
     static postProperty(req,res){
-
+    //validate post property function
         const {error} = Validations.postValidation(req.body);
         if(error){
             return {
@@ -40,7 +41,7 @@ class PropertyController{
                 };
 
     }
-
+    //view aspecific property
     static viewSpecificProperty(req,res){
         const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
 
@@ -55,8 +56,9 @@ class PropertyController{
             "data":view_id
         }
     }
-
+    //mark property as sold
     static  markProperty(req,res){
+    //validate mark property details as sold
         const {error} = Validations.markValidation(req.body);
         if(error){
             return {
@@ -79,7 +81,7 @@ class PropertyController{
         "Error":"property_id not found"
     }
 }
-
+    //delete property
     static deleteProperty(req,res){
         const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
     if(!view_id){
@@ -98,8 +100,9 @@ class PropertyController{
         
     };
     }
-
+    //update property
     static updateProperty(req,res){
+    //validate update property
         const {error} = Validations.postValidation(req.body);
         if(error){
             return {

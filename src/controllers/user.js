@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken')
 
 
 class UserController{
+	//create user account
     static signUp(req,res){
+	//validate user signup details
         const {error} = Validations.signupValidation(req.body);
         if(error){
             return {
@@ -14,6 +16,7 @@ class UserController{
                     };
                         
                 }
+		//check if the user already exists
         const userResult = userArray.find(user => req.body.email === user.email);
 		if(userResult) return{
 			"status":"Error",
@@ -21,6 +24,7 @@ class UserController{
 		};
 		
 		else{
+		//if the user doesnot exist, create a signup a new user
 			const newUser = new Users ({
                 Id:userArray.length + 1,
                 email:req.body.email,
@@ -34,6 +38,7 @@ class UserController{
 					});
 					
 			userArray.push(newUser);
+			//create a token
 			const token = jwt.sign({newUser}, "heymaynameisracheal",{  expiresIn: 1440 });
 			return [{
 				"status":"Success",
@@ -45,8 +50,9 @@ class UserController{
 		}
 
     }
-    
+    //login a user
     static login(req,res){
+	//validate user login details
 		const {error} = Validations.signinValidation(req.body);
 		if(error){
 			return {
@@ -84,7 +90,7 @@ class UserController{
 		}
 
 	}
-
+	//create a new user
 	static createUser(req,res){
 			const {error} = Validations.signupValidation(req.body);
 			if(error){
@@ -115,6 +121,7 @@ class UserController{
 			};
 		}
 
+		//get a specific user
 		static getUser(req,res){
 			const get_id = userArray.find(check_id => check_id.Id===parseInt(req.params.id));
 				
@@ -129,7 +136,7 @@ class UserController{
 				"data":get_id
 			}
 			}
-
+		//delete a user
 			static deleteUser(req,res){
 				const get_id = userArray.find(check_id => check_id.Id === parseInt(req.params.id));
 			if (!get_id) {
@@ -147,9 +154,9 @@ class UserController{
 		
 		
 			}
-
+			//update a user
 			static updateUser(req,res){
-
+				//validate update user
 				const {error} = Validations.signupValidation(req.body);
 				if(error){
 					return {
@@ -174,9 +181,9 @@ class UserController{
 			
 				}
 				}
-
+			//Edit a user
 			static patchUser(req,res){
-
+				//validate a patch user function
 				const {error} = Validations.editValidation(req.body);
 				if(error){
 					return {
