@@ -8,4 +8,4 @@ script:
 - npm run tests
 
 after_success:
-- npm run tests:coveralls
+- npm run coveralls

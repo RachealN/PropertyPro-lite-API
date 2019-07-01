@@ -1,31 +1,30 @@
 const jwt = require('jsonwebtoken');
-const  UserController = require('../controllers/user')
-const {Users,userArray} = require('../models/user')
+
 
 class Authorization {
-    static verifyToken(req,res){
+    //function to verify token
+    static verifyToken(req,res,next){
         console.log(req.headers)
+    //check headers for token
         if(!req.headers.authorization){
             return res.status(403).json({
                     "status":403,
                     "message":"No authorization token provided"
                 })
                 } 
+    //if everything is good, save to request for use in other routes
         const token = req.headers.authorization.split(" ")[1]
                 if ({token}){
                     jwt.verify(req.token,"heymaynameisracheal", (err, authUser) => {
                         console.log(req.authUser)
-                        if(err) {
-                            return res.status(200).json({
-                                "status":200,
-                                "success":"true",
-                                "message":"succefully authenticated",token
-                                
-                                
-                            })
-                        }next();
+                        if(token) {
+                            return next();
+                            
+                        }
                     })
                 }else{
+        // if there is no token
+        // return an error
                     return res.status(403).json({
                         "status":403,
                         "success":"false",
@@ -33,32 +32,24 @@ class Authorization {
                     })
                 }
             }
-
+            //function to check if the user is admin
             static requireAdmin(req,res,next){
-                const User = userArray.find(e => e.userId===parseInt(req.params.email));
-                    if(User){
-                        return res.status(200).json({
-                            "status":200,
-                            "success":"true",
-                            "message":"Authorized to perform this function",User
-                        })
-                    }
-                    if(!User){
-                        return res.status(401).json({
-                            "status":401,
-                            "success":"false",
-                            "message":"You cannot perform this function"
-                        })
-                    }
-                    if(!User.admin){
-                        return res.status(401).json({
-                            "status":401,
-                            "success":"false",
-                            "message":"user exists but is no admin user"
-                        })
-                    }next();
-        
+                const isAdmin = false
+            //if everything is okay, save to request for use in the other routes
+                if(req.body.isAdmin){
+                    return next();
                 }
+            //if the current_user is not admin, return error
+                if(!isAdmin){
+                    return res.status(401).json({
+                        "success":"Error",
+                        "Error":"Only administrators are authorized to perform this operation!"
+                    })
+                }
+                }
+            
+                
+            
         }
 
 module.exports = Authorization
