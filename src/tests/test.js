@@ -232,24 +232,6 @@ describe('GET/api/users',() =>{
     });
 });
 
-describe('POST/api/users',() =>{
-    it('should respond with a new created user',(done) =>{
-        chai.request(server)
-        .post('/api/users')
-        .send(signupCredentials)
-        .set('Authorization', 'Bearer ' + token)
-        .end((err,res) =>{
-            chai.expect(res.body).to.have.an('object');
-            chai.expect(res.statusCode).to.be.equal(201);
-            chai.expect(res.body).to.have.property('status');
-            chai.expect(res.type).to.be.equal('application/json');
-    
-           
-            done();
-        });
-    });
-});
-
 describe(' GET/api/users/:id', () => {
     it('should return a single user', () => {
       chai.request(server)

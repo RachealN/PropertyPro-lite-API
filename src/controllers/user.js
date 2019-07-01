@@ -13,8 +13,7 @@ class UserController{
             return {
                 "status":400,
                 "message":error.details[0].message  
-                    };
-                        
+                    };       
                 }
 		//check if the user already exists
         const userResult = userArray.find(user => req.body.email === user.email);
@@ -22,7 +21,6 @@ class UserController{
 			"status":"Error",
 			"Error":"User with this email already exist"
 		};
-		
 		else{
 		//if the user doesnot exist, create a signup a new user
 			const newUser = new Users ({
@@ -34,21 +32,15 @@ class UserController{
 				phoneNumber:req.body.phoneNumber,
 				address:req.body.address,
 				isAdmin:req.body.isAdmin
-	
 					});
-					
 			userArray.push(newUser);
 			//create a token
 			const token = jwt.sign({newUser}, "heymaynameisracheal",{  expiresIn: 1440 });
 			return [{
 				"status":"Success",
-				"data":newUser,token
-				
-				
+				"data":newUser,token	
 			}];
-
 		}
-
     }
     //login a user
     static login(req,res){
@@ -58,8 +50,7 @@ class UserController{
 			return {
 				"status":400,
 			  	"message":error.details[0].message  
-		  };
-			
+		  };	
 		}
 		const  {email,password}  =  req.body;
 		const user = userArray.find(e =>(email === e.email && password === e.password ));
@@ -67,15 +58,13 @@ class UserController{
 			const token = jwt.sign({user}, "heymaynameisracheal",{  expiresIn: 1440 });
 			return {
                 "status":"Success",
-                "data":user
-				
+                "data":user	
 			};
 		}else if(!user){
 			return {
 				"status":"Error",
 				"Error":"Authentication failed! You are not register in the system"
 			}
-
 		}else{
             return{
                 "status":"error",
@@ -83,6 +72,7 @@ class UserController{
             }
         }
 	}
+	//get all users
 	static getUsers(req,res) {
 		return {
 			"status":"success",
@@ -90,37 +80,7 @@ class UserController{
 		}
 
 	}
-	//create a new user
-	static createUser(req,res){
-			const {error} = Validations.signupValidation(req.body);
-			if(error){
-				return {
-					"status":400,
-					"message":error.details[0].message  
-						};
-							
-					}
-		const data = new Users ({
-			Id:userArray.length + 1,
-			email:req.body.email,
-			firstName:req.body.firstName,
-			lastName:req.body.lastName,
-			password:req.body.password,
-			phoneNumber:req.body.phoneNumber,
-			address:req.body.address,
-			isAdmin:req.body.isAdmin
-			
-
-				});
-				
-		userArray.push(data);
-			return {
-				"status":"success",
-				"data":data
-				
-			};
-		}
-
+	
 		//get a specific user
 		static getUser(req,res){
 			const get_id = userArray.find(check_id => check_id.Id===parseInt(req.params.id));
