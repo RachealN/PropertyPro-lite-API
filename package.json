@@ -9,8 +9,6 @@
     "build": "babel server.js --out-dir build",
     "lint": "eslint src/js",
     "coveralls": "npm test && nyc report --reporter=text-lcov | coveralls"
-    
-
   },
   "repository": {
     "type": "git",
@@ -23,6 +21,7 @@
   },
   "homepage": "https://github.com/RachealN/PropertyPro-lite-API#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "coveralls": "^3.0.4",
     "express": "^4.17.1",
