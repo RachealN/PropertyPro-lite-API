@@ -1,6 +1,7 @@
 const {Users,userArray} = require('../models/user')
 const Validations = require('../middleware/validation')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 
 
@@ -28,7 +29,8 @@ class UserController{
                 email:req.body.email,
 				firstName:req.body.firstName,
                 lastName:req.body.lastName,
-                password:req.body.password,
+				// password:req.body.password,
+				password:bcrypt.hashSync(req.body.password,10),
 				phoneNumber:req.body.phoneNumber,
 				address:req.body.address,
 				isAdmin:req.body.isAdmin
@@ -53,7 +55,7 @@ class UserController{
 		  };	
 		}
 		const  {email,password}  =  req.body;
-		const user = userArray.find(e =>(email === e.email && password === e.password ));
+		const user = userArray.find(e =>(email === e.email &&  bcrypt.compareSync(password,e.password)));
 		if (user ){
 			const token = jwt.sign({user}, "heymaynameisracheal",{  expiresIn: 1440 });
 			return {
