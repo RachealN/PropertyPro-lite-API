@@ -2,3 +2,6 @@ node_modules/
 package-lock.json
 .coveralls.yml
 .nyc_output
+build/
+coverage/
+mochawesome-report/
