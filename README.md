@@ -5,9 +5,7 @@
 
 [![Build Status](https://travis-ci.org/RachealN/PropertyPro-lite-API.svg?branch=develop)](https://travis-ci.org/RachealN/PropertyPro-lite-API)
 [![Maintainability](https://api.codeclimate.com/v1/badges/06a3edf7c0f6968c556d/maintainability)](https://codeclimate.com/github/RachealN/PropertyPro-lite-API/maintainability)
-[![Coverage Status](https://coveralls.io/repos/github/RachealN/PropertyPro-lite-API/badge.svg?branch=master)](https://coveralls.io/github/RachealN/PropertyPro-lite-API?branch=develop)
-
-
+[![Coverage Status](https://coveralls.io/repos/github/RachealN/PropertyPro-lite-API/badge.svg?branch=develop)](https://coveralls.io/github/RachealN/PropertyPro-lite-API?branch=develop)
 
 ## Project Overview
 is a platform where people can create and/or search properties for sale or rent.
