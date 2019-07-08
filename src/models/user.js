@@ -1,6 +1,6 @@
-const userArray= []
+export const userArray= []
     
-    class Users{
+export class Users{
         constructor({
             Id,
             email,
@@ -28,7 +28,6 @@ const userArray= []
     }
     
 
-module.exports = {Users,userArray};
 
     
     

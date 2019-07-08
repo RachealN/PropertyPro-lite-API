@@ -1,7 +1,7 @@
-const {Users,userArray} = require('../models/user')
-const Validations = require('../middleware/validation')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
+import {Users,userArray} from '../models/user';
+import Validations from '../middleware/validation';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 
 
@@ -184,4 +184,5 @@ class UserController{
     }
 
 
-    module.exports = UserController
+	// module.exports = UserController
+	export default UserController;

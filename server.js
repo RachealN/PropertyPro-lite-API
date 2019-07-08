@@ -1,12 +1,8 @@
-const routes = require('./src/routes/routes')
-const resolveSoa = require('dns')
-const express = require('express')
-const moment = require("moment");
-const uuid = require("uuid");
-const bodyParser = require("body-parser");
+import routes from './src/routes/routes';
+import express from 'express';
+import bodyParser from 'body-parser'
 
 const app = express()
-
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -17,4 +13,5 @@ app.get('/', (req, res) => res.status(200).send({ message: 'Welcome to PropertyP
 const port = process.env.PORT || 8081;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
-module.exports = app
+
+export default app;

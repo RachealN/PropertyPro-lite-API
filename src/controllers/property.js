@@ -1,5 +1,5 @@
-const {Properties,propertyArray} = require('../models/property')
-const Validations = require('../middleware/validation')
+import {Properties,propertyArray} from '../models/property';
+import Validations from '../middleware/validation';
 
 class PropertyController{
     //view all properties
@@ -21,8 +21,8 @@ class PropertyController{
                         
                 }
         const property = new Properties({
-            Id:propertyArray.length + 1,
-            owner:propertyArray.length + 1,
+            // Id:propertyArray.length + 1,
+            // owner:propertyArray.length + 1,
             status:req.body.status,
             price:req.body.price,
             state:req.body.state,
@@ -134,7 +134,4 @@ class PropertyController{
 }
 
 
-
-
-
-module.exports = PropertyController
+export default PropertyController;

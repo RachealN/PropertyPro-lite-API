@@ -1,6 +1,6 @@
-const propertyArray = []
+export const propertyArray = []
 
-class Properties{
+export class Properties{
     constructor({
         Id,
         owner,
@@ -27,4 +27,4 @@ class Properties{
     }
 }
 
-module.exports = {Properties,propertyArray}
+
