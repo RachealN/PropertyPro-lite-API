@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 
 class Authorization {
@@ -52,4 +52,5 @@ class Authorization {
             
         }
 
-module.exports = Authorization
+// module.exports = Authorization
+export default Authorization;

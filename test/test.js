@@ -1,8 +1,8 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const server = require('../../server');
-const {Users,userArray} = require('../models/user')
-const jwt = require('jsonwebtoken');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../server'
+import {Users,userArray} from '../src/models/user'
+import jwt from 'jsonwebtoken';
 
 const should = chai.should();
 const {expect} = chai.expect;

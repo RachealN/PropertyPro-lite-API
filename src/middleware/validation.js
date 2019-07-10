@@ -1,6 +1,8 @@
-const Joi = require('joi');
+// const Joi = require('joi');
 
-const properties = require('../controllers/property');
+// const properties = require('../controllers/property');
+import Joi from 'joi';
+import properties from '../controllers/property';
 
 class Validations{
     //validate post property details
@@ -57,4 +59,5 @@ class Validations{
 }
 
 const validate = new Validations();
-module.exports = validate;
+// module.exports = validate;
+export default validate;

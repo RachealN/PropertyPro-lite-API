@@ -1,11 +1,12 @@
-const {Properties,propertyArray} = require('../models/property')
-const Validations = require('../middleware/validation')
+import {Properties,propertyArray} from '../models/property';
+import Validations from '../middleware/validation';
 
 class PropertyController{
     //view all properties
     static viewProperties(req,res){
         return{
-            "status":"success",
+            "status":200,
+            "message":"Properties are succesfully retrieved",
             "data":propertyArray
         };
     }
@@ -20,6 +21,13 @@ class PropertyController{
                     };
                         
                 }
+        
+        const propertyResult = propertyArray.find(props => req.body.image_url === props.image_url);
+        if(propertyResult) return{
+                    "status":"Error",
+                    "Error":"Property with that image already exists"
+                };
+        else{
         const property = new Properties({
             Id:propertyArray.length + 1,
             owner:propertyArray.length + 1,
@@ -35,12 +43,14 @@ class PropertyController{
         });
         propertyArray.push(property);
                 return{
-                    "status":"success",
+                    "status":201,
+                    "message":"property succesfully created",
                     "data":property
 
                 };
 
     }
+}
     //view aspecific property
     static viewSpecificProperty(req,res){
         const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
@@ -72,7 +82,8 @@ class PropertyController{
         if(Property){
             (Property.status = req.body.status)
             return{
-                "status":"success",
+                "status":200,
+                "message":"property retrieved",
                 "data":Property
             };
         }
@@ -120,7 +131,8 @@ class PropertyController{
             
 
             return{
-                "status":"success",
+                "status":201,
+                "message":"succesfully updated",
                 "data":newProperty
             };
         }
@@ -134,7 +146,4 @@ class PropertyController{
 }
 
 
-
-
-
-module.exports = PropertyController
+export default PropertyController;

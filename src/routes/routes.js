@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
+import PropertyController from '../controllers/property';
+import UserController from '../controllers/user';
+import Authorization from '../middleware/auth';
+
+
 const router = express.Router();
-
 const app = express()
-
-const PropertyController = require('../controllers/property')
-const UserController = require('../controllers/user')
-const Authorization = require('../middleware/auth')
 
 //property routes
 router.get('/api/property',Authorization.verifyToken,(req,res) =>{
@@ -65,4 +65,5 @@ router.patch('/api/users/:id',(req,res) =>{
 
 
 
-module.exports= router;
+// module.exports= router;
+export default router;
