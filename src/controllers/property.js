@@ -21,7 +21,7 @@ class PropertyController{
                     };
                         
                 }
-        // const userResult = userArray.find(user => req.body.email === user.email);
+        
         const propertyResult = propertyArray.find(props => req.body.image_url === props.image_url);
         if(propertyResult) return{
                     "status":"Error",
