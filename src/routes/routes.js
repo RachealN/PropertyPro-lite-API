@@ -1,17 +1,8 @@
-// const express = require('express');
-// const router = express.Router();
-
-// const app = express()
-
-// const PropertyController = require('../controllers/property')
-// const UserController = require('../controllers/user')
-// const Authorization = require('../middleware/auth')
 import express from 'express';
-// import router from 'express.Router()';
-// import app from 'express';
 import PropertyController from '../controllers/property';
 import UserController from '../controllers/user';
 import Authorization from '../middleware/auth';
+
 
 const router = express.Router();
 const app = express()

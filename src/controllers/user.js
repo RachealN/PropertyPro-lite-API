@@ -2,6 +2,7 @@ import {Users,userArray} from '../models/user';
 import Validations from '../middleware/validation';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import omit from 'omit'
 
 
 
@@ -24,13 +25,13 @@ class UserController{
 		};
 		else{
 		//if the user doesnot exist, create a signup a new user
-			const newUser = new Users ({
+		const {password:hide} = req.body
+		const newUser = new Users ({
                 Id:userArray.length + 1,
                 email:req.body.email,
 				firstName:req.body.firstName,
-                lastName:req.body.lastName,
-				// password:req.body.password,
-				password:bcrypt.hashSync(req.body.password,10),
+				lastName:req.body.lastName,
+				password:bcrypt.hashSync(hide,10),
 				phoneNumber:req.body.phoneNumber,
 				address:req.body.address,
 				isAdmin:req.body.isAdmin
@@ -38,46 +39,59 @@ class UserController{
 			userArray.push(newUser);
 			//create a token
 			const token = jwt.sign({newUser}, "heymaynameisracheal",{  expiresIn: 1440 });
+			const{password,...hideKeys} = newUser
+			// console.log(hideKeys)
 			return [{
-				"status":"Success",
-				"data":newUser,token	
+				"status":201,
+				"message":"User succesfully created",
+				// "data":omit(newUser,'password'),
+				"data":hideKeys,token
 			}];
 		}
     }
     //login a user
     static login(req,res){
 	//validate user login details
+		const {password:hide} = req.body
 		const {error} = Validations.signinValidation(req.body);
 		if(error){
 			return {
 				"status":400,
 			  	"message":error.details[0].message  
-		  };	
+		  };
+			
 		}
-		const  {email,password}  =  req.body;
-		const user = userArray.find(e =>(email === e.email &&  bcrypt.compareSync(password,e.password)));
+		const  {email}  =  req.body;
+		const user = userArray.find(e =>{ return email === e.email && bcrypt.compareSync(hide,e.password)});
+		const{password,...hideKey} = user
+		console.log(hideKey)
+
 		if (user ){
 			const token = jwt.sign({user}, "heymaynameisracheal",{  expiresIn: 1440 });
 			return {
-                "status":"Success",
-                "data":user	
+				"status":"Success",
+				"message":"succesfully logged In",
+                "data":hideKey,token
+				
 			};
 		}else if(!user){
 			return {
 				"status":"Error",
 				"Error":"Authentication failed! You are not register in the system"
 			}
+
 		}else{
             return{
                 "status":"error",
                 "Error":"wrong credetilas"
             }
-        }
+		}
 	}
 	//get all users
 	static getUsers(req,res) {
 		return {
-			"status":"success",
+			"status":200,
+			"message":"Users succesfully retrieved",
 			"data":userArray
 		}
 
@@ -94,7 +108,8 @@ class UserController{
 			   };
 			}
 			   return {
-				"status":"success",
+				"status":200,
+				"message":"User succesfully retrieved",
 				"data":get_id
 			}
 			}
@@ -110,7 +125,8 @@ class UserController{
 				const index=userArray.indexOf(get_id);
 				userArray.splice(index,1);
 				return{
-					"status":"success",
+					"status":200,
+					"message":"user succesfully deleted",
 					"data":get_id
 				};
 		
@@ -133,7 +149,8 @@ class UserController{
 						(newUser.email = req.body.email, newUser.firstName = req.body.firstName, newUser.lastName = req.body.lastName, newUser.password = req.body.password,
 							newUser.phoneNumber = req.body.phoneNumber, newUser.address = req.body.address, newUser.isAdmin = req.body.isAdmin)
 						return{
-						"status":"success",
+						"status":201,
+						"message":"user succesfully updated",
 						"data":newUser
 				};
 				}
@@ -159,7 +176,8 @@ class UserController{
 				if(editUser){
 							( editUser.firstName = req.body.firstName, editUser.lastName = req.body.lastName, editUser.address = req.body.address)
 							return{
-							"status":"success",
+							"status":201,
+							"message":"user is successfully edited",
 							"data":editUser
 					};
 					}
