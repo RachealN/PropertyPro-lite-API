@@ -9,7 +9,7 @@ class Validations{
     postValidation(postData){
         const schema = {
             status:Joi.string().min(4).required(),
-            price:Joi.number().required(),
+            price:Joi.number().min(0).required(),
             state:Joi.string().min(3).required(),
             city:Joi.string().min(3).required(),
             address:Joi.string().min(5).required(),

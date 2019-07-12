@@ -42,8 +42,8 @@ class Authorization {
             //if the current_user is not admin, return error
                 if(!isAdmin){
                     return res.status(401).json({
-                        "success":"Error",
-                        "Error":"Only administrators are authorized to perform this operation!"
+                        "success":401,
+                        "message":"Only administrators are authorized to perform this operation!"
                     })
                 }
                 }

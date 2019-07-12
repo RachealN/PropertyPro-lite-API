@@ -1,5 +1,14 @@
 import {Properties,propertyArray} from '../models/property';
 import Validations from '../middleware/validation';
+import cloudinary from 'cloudinary';
+
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dvgrmblh2/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'cakgs8ec';
+cloudinary.config({
+    cloud_name: 'dvgrmblh2',
+    api_key: '946915525975576',
+    api_secret: 'T2ssd6NXKPjWaSkmd3tjd_OrRYM',
+  });
 
 class PropertyController{
     //view all properties
@@ -21,13 +30,19 @@ class PropertyController{
                     };
                         
                 }
-        // const userResult = userArray.find(user => req.body.email === user.email);
+        
         const propertyResult = propertyArray.find(props => req.body.image_url === props.image_url);
         if(propertyResult) return{
-                    "status":"Error",
-                    "Error":"Property with that image already exists"
+                    "status":404,
+                    "Message":"Property with that image already exists"
                 };
         else{
+        const image = req.files.image.path;
+        cloudinary.uploader.upload(image, (result, error) => {
+            if (error) {
+                responses.response(res, 404, error, true);
+              }
+            
         const property = new Properties({
             Id:propertyArray.length + 1,
             owner:propertyArray.length + 1,
@@ -38,7 +53,7 @@ class PropertyController{
             address:req.body.address,
             type:req.body.type,
             created_on: new Date(),
-            image_url:req.body.image_url
+            image_url: result.url,
             
         });
         propertyArray.push(property);
@@ -48,6 +63,7 @@ class PropertyController{
                     "data":property
 
                 };
+            })
 
     }
 }
@@ -57,12 +73,13 @@ class PropertyController{
 
         if(!view_id){
             return{
-                "status":"error",
-                "Error":"Id not found"
+                "status":404,
+                "messsage":" PropertyId not found"
             };
         }
         return{
-            "status":"success",
+            "status":200,
+            "message":"Property successfully retrieved",
             "data":view_id
         }
     }
@@ -83,13 +100,13 @@ class PropertyController{
             (Property.status = req.body.status)
             return{
                 "status":200,
-                "message":"property retrieved",
+                "message":"property status successfully edited ",
                 "data":Property
             };
         }
     return{
-        "status":"Error",
-        "Error":"property_id not found"
+        "status":404,
+        "message":"property_id not found"
     }
 }
     //delete property
@@ -97,14 +114,14 @@ class PropertyController{
         const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
     if(!view_id){
         return{
-            "status":"error",
-            "Error":"Property_id not found"
+            "status":404,
+            "message":"Property_id not found"
         };
     }
     const index = propertyArray.indexOf(view_id);
     propertyArray.splice(index,1);
     return{
-        "status":"success",
+        "status":200,
         "message":"deleted succesfully",
         "data":view_id,
         
@@ -137,8 +154,8 @@ class PropertyController{
             };
         }
         return{
-            "status":"Error",
-            "Error":"property_id not found"
+            "status":404,
+            "message":"property_id not found"
         }
     }
 

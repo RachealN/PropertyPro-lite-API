@@ -20,7 +20,7 @@ class UserController{
 		//check if the user already exists
         const userResult = userArray.find(user => req.body.email === user.email);
 		if(userResult) return{
-			"status":"Error",
+			"status":400,
 			"Error":"User with this email already exist"
 		};
 		else{
@@ -44,7 +44,6 @@ class UserController{
 			return [{
 				"status":201,
 				"message":"User succesfully created",
-				// "data":omit(newUser,'password'),
 				"data":hideKeys,token
 			}];
 		}
@@ -69,21 +68,21 @@ class UserController{
 		if (user ){
 			const token = jwt.sign({user}, "heymaynameisracheal",{  expiresIn: 1440 });
 			return {
-				"status":"Success",
+				"status":200,
 				"message":"succesfully logged In",
                 "data":hideKey,token
 				
 			};
 		}else if(!user){
 			return {
-				"status":"Error",
-				"Error":"Authentication failed! You are not register in the system"
+				"status":401,
+				"message":"Authentication failed! You are not register in the system"
 			}
 
 		}else{
             return{
-                "status":"error",
-                "Error":"wrong credetilas"
+                "status":401,
+                "messsage":"wrong credetilas"
             }
 		}
 	}
@@ -118,8 +117,8 @@ class UserController{
 				const get_id = userArray.find(check_id => check_id.Id === parseInt(req.params.id));
 			if (!get_id) {
 				return{
-					"status":"Error",
-					"Error":"userId not found"	
+					"status":404,
+					"message":"userId not found"	
 				};
 			}
 				const index=userArray.indexOf(get_id);
@@ -182,8 +181,8 @@ class UserController{
 					};
 					}
 					return {
-						"status":"Error",
-						"Error":"user with that id is not found",
+						"status":404,
+						"message":"user with that id is not found",
 				
 					}
 					}

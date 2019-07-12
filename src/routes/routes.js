@@ -1,11 +1,14 @@
 import express from 'express';
+import connect from 'connect-multiparty';
 import PropertyController from '../controllers/property';
 import UserController from '../controllers/user';
 import Authorization from '../middleware/auth';
 
 
 const router = express.Router();
-const app = express()
+const app = express();
+const connection = connect();
+
 
 //property routes
 router.get('/api/property',Authorization.verifyToken,(req,res) =>{
@@ -13,7 +16,7 @@ router.get('/api/property',Authorization.verifyToken,(req,res) =>{
 });
 
 router.post('/api/property',Authorization.verifyToken,(req,res) =>{
-    res.status(201).json(PropertyController.postProperty(req));
+    res.status(201).json(connection,PropertyController.postProperty(req));
 });
 
 router.get('/api/property/:id',Authorization.verifyToken,(req,res) =>{
