@@ -62,7 +62,7 @@ class UserController{
 		}
 		const  {email}  =  req.body;
 		const user = userArray.find(e =>{ return email === e.email && bcrypt.compareSync(hide,e.password)});
-		const{password,...hideKey} = user
+		const{password, ...hideKey} = user
 		console.log(hideKey)
 
 		if (user ){
@@ -201,5 +201,4 @@ class UserController{
     }
 
 
-	// module.exports = UserController
 	export default UserController;
