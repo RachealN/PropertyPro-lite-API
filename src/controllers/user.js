@@ -101,10 +101,10 @@ class UserController{
 			const get_id = userArray.find(check_id => check_id.Id===parseInt(req.params.id));
 				
 				if(!get_id){
-					return{
-					"status":"Error",
-					"Error":"userId not found"
-			   };
+					return res.status(404).json({
+						"status":404,
+						"messsage":" PropertyId not found"
+					});
 			}
 			   return {
 				"status":200,
@@ -116,10 +116,10 @@ class UserController{
 			static deleteUser(req,res){
 				const get_id = userArray.find(check_id => check_id.Id === parseInt(req.params.id));
 			if (!get_id) {
-				return{
+				return res.status(404).json({
 					"status":404,
-					"message":"userId not found"	
-				};
+					"messsage":" PropertyId not found"
+				});
 			}
 				const index=userArray.indexOf(get_id);
 				userArray.splice(index,1);
@@ -153,11 +153,10 @@ class UserController{
 						"data":newUser
 				};
 				}
-				return {
-					"status":"Error",
-					"Error":"user with that id is not found",
-			
-				}
+				return res.status(404).json({
+					"status":404,
+					"messsage":" PropertyId not found"
+				});
 				}
 			//Edit a user
 			static patchUser(req,res){
@@ -180,11 +179,10 @@ class UserController{
 							"data":editUser
 					};
 					}
-					return {
+					return res.status(404).json({
 						"status":404,
-						"message":"user with that id is not found",
-				
-					}
+						"messsage":" PropertyId not found"
+					});
 					}
 	
 				
