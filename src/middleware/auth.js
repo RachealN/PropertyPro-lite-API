@@ -7,10 +7,10 @@ class Authorization {
         console.log(req.headers)
     //check headers for token
         if(!req.headers.authorization){
-            return res.status(403).json({
+            return {
                     "status":403,
                     "message":"No authorization token provided"
-                })
+                }
                 } 
     //if everything is good, save to request for use in other routes
         const token = req.headers.authorization.split(" ")[1]

@@ -77,10 +77,10 @@ class PropertyController{
         const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
 
         if(!view_id){
-            return res.status(404).json({
+            return {
                 "status":404,
                 "messsage":" PropertyId not found"
-            });
+            };
         }
         return{
             "status":200,
@@ -109,19 +109,19 @@ class PropertyController{
                 "data":Property
             };
         }
-        return res.status(404).json({
+        return {
             "status":404,
             "messsage":" PropertyId not found"
-        });
+        };
 }
     //delete property
     static deleteProperty(req,res){
         const view_id = propertyArray.find(check_id => check_id.Id === parseInt(req.params.id));
     if(!view_id){
-        return res.status(404).json({
+        return {
             "status":404,
             "messsage":" PropertyId not found"
-        });
+        };
     }
     const index = propertyArray.indexOf(view_id);
     propertyArray.splice(index,1);
@@ -158,10 +158,10 @@ class PropertyController{
                 "data":newProperty
             };
         }
-        return res.status(404).json({
+        return {
             "status":404,
             "messsage":" PropertyId not found"
-        });
+        };
     }
 
     
