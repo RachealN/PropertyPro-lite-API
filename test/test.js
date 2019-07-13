@@ -3,6 +3,9 @@ import chaiHttp from 'chai-http';
 import server from '../server'
 import {Users,userArray} from '../src/models/user'
 import jwt from 'jsonwebtoken';
+import fs from 'fs'
+
+const storagePath = 'C:/Users/MARCUS/Desktop/PropertyPro Lite API/test/andela.png'
 
 const should = chai.should();
 const {expect} = chai.expect;
@@ -62,19 +65,188 @@ describe('GET/api/property', () =>{
 });
 
 describe('POST/api/property',() =>{
-    it('should return a new property advert created',() =>{
-        chai.request(server)
-        .post('/api/property')
-        .send(propertyDetails)
-        .set('Authorization', 'Bearer ' + token)
-        .end((err,res) =>{
-            chai.expect(res.body).to.be.a('object');
-            chai.expect(res.statusCode).to.be.equal(201);
-            chai.expect(res.body).to.have.property('status');
-            chai.expect(res.type).to.be.equal('application/json');
-
+        it('should return a new property advert created',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res.body).to.be.a('object');
+                chai.expect(res.body.status).to.be.equal('success');
+                chai.expect(res.body.data).to.have.key('image_url','status','city','address','state','price','type');
+                chai.expect(res.body.data.image_url).to.be.a('string');
+                chai.expect(res.body.data.city).to.equal('Kampala');
+                chai.expect(res.body.data.state).to.equal('uganda');
+                chai.expect(res.body,data.address).to.equal('entebbe');
+                chai.expect(res.body.data.price).to.equal('10.0');
+                chai.expect(res.body.data.type).to.equal('3bedrooms');
+                chai.expect(res.body.data).to.equal('available');
+                chai.expect(res.statusCode).to.be.equal(201);
+                chai.expect(res.body).to.have.property('status');
+                chai.expect(res.type).to.be.equal('application/json');
+    
+            });
         });
-    });
+        it('should not create property with empty address fields',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.body.status).to.be.equal('error');
+                chai.expect(res.body.message).to.equal('\"address\" is not allowed to be empty');
+            });
+    
+        });
+        it('should not create property with empty status fields',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.body.status).to.be.equal('error');
+                chai.expect(res.body.message).to.equal('\"status\" is not allowed to be empty');
+            });
+    
+        });
+        it('should not create property with empty state fields',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.body.status).to.be.equal('error');
+                chai.expect(res.body.message).to.equal('\"state\" is not allowed to be empty');
+            });
+    
+        });
+    
+        it('should not create property with empty city fields',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.body.status).to.be.equal('error');
+                chai.expect(res.body.message).to.equal('\"city\" is not allowed to be empty');
+            });
+    
+        });
+        it('should not create property with empty type fields',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.body.status).to.be.equal('error');
+                chai.expect(res.body.message).to.equal('\"type\" is not allowed to be empty');
+            });
+    
+        });
+        it('should not create property with empty price fields',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.body.status).to.be.equal('error');
+                chai.expect(res.body.message).to.equal('\"price\" is not allowed to be empty');
+            });
+    
+        });
+        it('should not create property with empty image_url fields',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.body.status).to.be.equal('error');
+                chai.expect(res.body.message).to.equal('\"image_url\" is not allowed to be empty');
+            });
+    
+        });
+        it('should create property without a token in the headers',() =>{
+            chai.request(server)
+            .post('/api/property')
+            .field(propertyDetails)
+            .field('status','available')
+            .field('state','uganda')
+            .field('city','kampala')
+            .field('address','Entebbe')
+            .field('type','3bedroom')
+            .field('price','10.0')
+            .attach('image', fs.readFileSync(storagePath), 'andela.png')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err,res) =>{
+                chai.expect(res).to.have.status(403);
+                chai.expect(res.body.status).to.be.equal('error');
+                chai.expect(res.body.message).to.equal('No authorization token provided');
+            });
+    
+        });
 });
 
 describe('GET/api/property/:id',() =>{
@@ -142,12 +314,12 @@ describe('POST/api/auth/signUp',() =>{
         .send(signupCredentials)
         .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
-            // chai.expect(res.body).to.have.property('token');
             chai.expect(res.body).to.have.an('array');
             chai.expect(res.statusCode).to.be.equal(201);
             chai.expect(res.type).to.be.equal('application/json');
         });
     });
+    
 
 });
 describe('POST/api/auth/signUp',() =>{
@@ -157,8 +329,6 @@ describe('POST/api/auth/signUp',() =>{
         .set('Authorization', 'Bearer ' + token)
         .send(signupCredentials)
         .then((res) =>{
-            // chai.expect(res.status).to.be.equal(401);
-
             chai.expect(res.body).to.have.property('status');
             chai.expect(res.body).to.be.an('object');
             chai.expect(res.type).to.be.equal('application/json');
@@ -167,6 +337,7 @@ describe('POST/api/auth/signUp',() =>{
         })
         .catch(err => done(err));
     });
+    
 });
 
 
@@ -183,9 +354,6 @@ describe('POST/api/auth/signIn', () =>{
 		});
 		
 	});
-});
-
-describe('POST/api/auth/signIn',() =>{
     it('should not signin a user with wrong credentials',() =>{
         chai.request(server)
         .post('/api/auth/signIn')
@@ -194,7 +362,6 @@ describe('POST/api/auth/signIn',() =>{
             password:14253
         })
         .end((err,res) =>{
-            // chai.expect(res.status).to.be.equal(401);
             chai.expect(res.body).to.have.property('status');
             chai.expect(res.body).to.be.an('object');
             chai.expect(res.type).to.be.equal('application/json');
@@ -252,9 +419,7 @@ describe(' GET/api/users/:id', () => {
         .set('Authorization', 'Bearer ' + token)
         .end((err,res) =>{
             chai.expect(res.body).to.be.a('object');
-            // chai.expect(res.statusCode).to.be.equal(200);
-            // chai.expect(res.body).to.have.property('status');
-
+            
         });
     });
 });
@@ -268,7 +433,7 @@ describe('PUT/api/users/:id', () => {
         .end((err, res) => {
           chai.expect(res.body).to.be.a('object');
           chai.expect(res.type).to.be.equal('application/json');
-        //   chai.expect(res.body).to.have.property('status');
+        
         });
     });
   });
@@ -287,4 +452,3 @@ describe('PUT/api/users/:id', () => {
         });
     });
   });
-

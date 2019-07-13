@@ -2,7 +2,7 @@ import {Properties,propertyArray} from '../models/property';
 import Validations from '../middleware/validation';
 import cloudinary from 'cloudinary';
 
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dvgrmblh2/upload';
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dvgrmblh2/image/upload';
 const CLOUDINARY_UPLOAD_PRESET = 'cakgs8ec';
 cloudinary.config({
     cloud_name: 'dvgrmblh2',
@@ -22,26 +22,28 @@ class PropertyController{
     //create a new property
     static postProperty(req,res){
     //validate post property function
-        const {error} = Validations.postValidation(req.body);
-        if(error){
-            return {
-                "status":400,
-                "message":error.details[0].message  
-                    };
+        // const {error} = Validations.postValidation(req.body);
+        // if(error){
+        //     return {
+        //         "status":400,
+        //         "message":error.details[0].message  
+        //             };
                         
-                }
+        //         }
         
-        const propertyResult = propertyArray.find(props => req.body.image_url === props.image_url);
+        const propertyResult = propertyArray.find(props => req.body === props);
         if(propertyResult) return{
                     "status":404,
                     "Message":"Property with that image already exists"
                 };
         else{
+       
         const image = req.files.image.path;
         cloudinary.uploader.upload(image, (result, error) => {
             if (error) {
                 responses.response(res, 404, error, true);
               }
+            
             
         const property = new Properties({
             Id:propertyArray.length + 1,
@@ -53,16 +55,18 @@ class PropertyController{
             address:req.body.address,
             type:req.body.type,
             created_on: new Date(),
-            image_url: result.url,
+            image_url:result.url,
             
         });
+        console.log("result:",result)
         propertyArray.push(property);
-                return{
+        console.log(property);
+            return res.status(201).json ({
                     "status":201,
                     "message":"property succesfully created",
                     "data":property
 
-                };
+                });
             })
 
     }

@@ -1,5 +1,6 @@
 import express from 'express';
 import connect from 'connect-multiparty';
+import fileUpload from 'express-fileuploader';
 import PropertyController from '../controllers/property';
 import UserController from '../controllers/user';
 import Authorization from '../middleware/auth';
@@ -8,6 +9,9 @@ import Authorization from '../middleware/auth';
 const router = express.Router();
 const app = express();
 const connection = connect();
+// router.use(fileUpload({
+//     useTempFiles:true,
+// }));
 
 
 //property routes
@@ -15,8 +19,8 @@ router.get('/api/property',Authorization.verifyToken,(req,res) =>{
     res.json(PropertyController.viewProperties(req));
 });
 
-router.post('/api/property',Authorization.verifyToken,(req,res) =>{
-    res.status(201).json(connection,PropertyController.postProperty(req));
+router.post('/api/property',connection,Authorization.verifyToken,(req,res) =>{
+    PropertyController.postProperty(req,res);
 });
 
 router.get('/api/property/:id',Authorization.verifyToken,(req,res) =>{
