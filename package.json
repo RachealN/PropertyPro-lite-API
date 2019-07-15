@@ -9,8 +9,8 @@
     ]
   },
   "scripts": {
-    "test": "nyc mocha",
-    "dev-start": "nodemon --exec babel-node server.js",
+    "test": "SET NODE_ENV = test && nyc mocha",
+    "dev-start": "SET NODE_ENV=development & nodemon  --exec babel-node server.js",
     "build": "babel server.js --out-dir build",
     "lint": "eslint src/js",
     "coveralls": "npm test && nyc report --reporter=text-lcov | coveralls"
@@ -44,7 +44,6 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "nyc": "^14.1.1",
-    "omit": "^1.0.1",
     "uuid": "^3.3.2",
     "nodemon": "^1.19.1"
   },

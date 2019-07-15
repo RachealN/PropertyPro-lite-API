@@ -9,12 +9,8 @@ import Authorization from '../middleware/auth';
 const router = express.Router();
 const app = express();
 const connection = connect();
-// router.use(fileUpload({
-//     useTempFiles:true,
-// }));
 
 
-//property routes
 router.get('/api/property',Authorization.verifyToken,(req,res) =>{
     res.json(PropertyController.viewProperties(req,res));
 });

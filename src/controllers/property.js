@@ -31,20 +31,21 @@ class PropertyController{
                         
         //         }
         
-        const propertyResult = propertyArray.find(props => req.body === props);
-        if(propertyResult) return{
-                    "status":404,
-                    "Message":"Property with that image already exists"
-                };
-        else{
-       
+        // const propertyResult = propertyArray.find(props => req.body === props);
+        // if(propertyResult) return{
+        //             "status":404,
+        //             "Message":"Property with that image already exists"
+        //         };
+        // else{
+        
+        if (process.env.NODE_ENV !== 'test'){
         const image = req.files.image.path;
         cloudinary.uploader.upload(image, (result, error) => {
             if (error) {
                 responses.response(res, 404, error, true);
               }
             
-            
+          
         const property = new Properties({
             Id:propertyArray.length + 1,
             owner:propertyArray.length + 1,
@@ -68,6 +69,32 @@ class PropertyController{
 
                 });
             })
+            
+        
+
+    }else{
+    const property = new Properties({
+            Id:propertyArray.length + 1,
+            owner:propertyArray.length + 1,
+            status:req.body.status,
+            price:req.body.price,
+            state:req.body.state,
+            city:req.body.city,
+            address:req.body.address,
+            type:req.body.type,
+            created_on: new Date()
+          
+            
+        });
+        console.log("result:",result)
+        propertyArray.push(property);
+        console.log(property);
+            return res.status(201).json ({
+                    "status":201,
+                    "message":"property succesfully created",
+                    "data":property
+
+                });
 
     }
 }
