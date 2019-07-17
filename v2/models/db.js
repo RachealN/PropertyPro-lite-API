@@ -1,22 +1,17 @@
-import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import { Pool } from 'pg';
 
 dotenv.config();
 
-const connectionString = {
-  user: process.env.DB_USER,
-  password: process.env.BD_PASS,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
+const env = process.env.NODE_ENV;
+const database_url = env === 'test' ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL;
 
-};
-
-const pool = new Pool(connectionString);
-
+const pool = new Pool({
+  connectionString: database_url,
+});
 
 pool.on('connect', () => {
-  console.log('Connected to booklib db Successfully');
+  console.log('Connected to propertypro lite db Successfully');
 });
 
 
@@ -29,8 +24,7 @@ export const createTables = async () => {
     address     VARCHAR(255)     NOT NULL,
     email       VARCHAR(255)     NOT NULL,
     password    VARCHAR(255)     NOT NULL,
-    isAdmin     BOOLEAN    NOT NULL
-              )`;
+    isAdmin     BOOLEAN    NOT NULL)`;
 
 
   const propertyTables = `CREATE TABLE IF NOT EXISTS properties
@@ -40,24 +34,12 @@ export const createTables = async () => {
   state     VARCHAR(25)     NOT NULL,
   address    VARCHAR(255)     NOT NULL,
   phoneNumber  INTEGER  NOT NULL,
-  status VARCHAR(100)  DEFAULT 'sold',
-  createdOn  TIMESTAMP DEFAULT NOW(),
-  ownerEmail     VARCHAR(255)     NOT NULL,
-  ownerPhoneNumber      INTEGER     NOT NULL
-  
-  
+  status VARCHAR(100)  DEFAULT 'availlable',
+  reason     VARCHAR(255)     NOT NULL,
+  description      VARCHAR(255)     NOT NULL,
+  createdOn  TIMESTAMP DEFAULT NOW())`;
 
-            )`;
 
-  const flagTables = `CREATE TABLE IF NOT EXISTS flags
-    (   id SERIAL PRIMARY KEY,
-    propertyId   VARCHAR(255)     NOT NULL,
-    createdOn  TIMESTAMP DEFAULT NOW(),
-    reason     VARCHAR(255)     NOT NULL,
-    description      VARCHAR(255)     NOT NULL
-    
-
-              )`;
   await pool.query(userTables, (err, res) => {
     if (err) {
       console.log(err);
@@ -72,19 +54,9 @@ export const createTables = async () => {
     }
     console.log(res);
   });
-  await pool.query(flagTables, (err, res) => {
-    if (err) {
-      console.log(err);
-
-    }
-    console.log(res);
-
-  });
 };
 
 
-pool.on('remove', () => {
-  process.exit(0);
-});
-
 require('make-runnable');
+
+export default pool;
