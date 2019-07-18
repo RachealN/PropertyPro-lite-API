@@ -70,7 +70,7 @@ class PropertyDb{
         }else{
             const {status} = req.body
             const markData = [status];
-            const marked =  await pro.markPro (markData,req.params.id);
+            const marked =  await pro.getProperty (markData,req.params.id);
 
             return res.status(201).json({
                 status: 201,
@@ -82,6 +82,24 @@ class PropertyDb{
 
     });
     }
+
+}
+
+static async getProperty(req, res){
+        const {status} = req.body
+        const markData = [status];
+        const marked =  await pro.markPro (markData,req.params.id);
+
+        return res.status(201).json({
+            status: 201,
+        message: 'success',
+        data: {
+        status: marked.rows[0]
+        
+        },
+
+});
+
 
 }
 }

@@ -36,6 +36,15 @@ const updateAdvert = async(data,id) => {
   }
 };
 
+const getProperty = async(getdata,id) => {
+  const getId = 
+  `SELECT * FROM properties  WHERE id = '${id}' RETURNING * `;
+  try { return await pool.query(getdata,data); } catch (error) {
+    console.log(error)
+    return (0);
+  }
+};
+
 const markPro = async(marks,id) => {
   const mark = `UPDATE properties set status=$1 WHERE id ='${id}' RETURNING *`;
   try {
@@ -53,8 +62,11 @@ const propertySchema = (values) => {
   }
 };
 
+export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert,markPro,getProperty};
 
-export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert,markPro};
+
+
+
 
 
 
