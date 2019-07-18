@@ -8,6 +8,7 @@ class UserDb {
   // create user account
   static async registerUsers(req, res) {
     const { error } = Validations.registerValidations(req.body);
+  
     if (error) {
       return {
         'status': 400,
@@ -17,7 +18,10 @@ class UserDb {
     const value = await schemaValues.checkEmail(req.body.email);
     if (value.rows.length > 0) {
       return res.status(400).send({ 'status': 400, 'error': 'User already exists' });
+      
     }
+    let hashedPassword = bcrypt.hashSync(req.body.password, 8);
+    req.body.password = hashedPassword
     const data = [req.body.firstname, req.body.lastname, req.body.address, req.body.email, req.body.password, req.body.isadmin];
     const {rows}  =  await schemaValues.Userschema(data);
     const user = rows[0];
@@ -34,7 +38,7 @@ class UserDb {
         firstname: user.firstname,
         lastname: user.lastname,
         address: user.address,
-        isadmin: user.isadmin,
+        isadmin: user.isadmin
       },
     });
 
@@ -42,41 +46,41 @@ class UserDb {
   }
 
   static async loginUser(req,res){
-    const { error } = Validations.registerValidations(req.body);
+    console.log('-----------------------------')
+    const { error } = Validations.loginValidation(req.body);
     if (error) {
-      return {
+      return res.status(400).json({
         'status': 400,
         'message': error.details[0].message,
-      };
-    }
+      });
+    }else{
 
     const value = await schemaValues.checkEmail(req.body.email);
-    if (req.body.password != value.rows[0]['password']) {
+    const passwordIsValid = bcrypt.compareSync(req.body.password, value.rows[0]['password']);
+    if (!passwordIsValid) {
       return res.status(400).send({ 'status': 400, 'error': 'password is invalid' });
     }else{
-    const userDetails = [req.body.email, req.body.password];
-    const {rows}  =  await schemaValues.loginschema(userDetails);
+    const {rows}  =  await schemaValues.loginSchema(req.body);
     const user = rows[0];
+    console.log(user);
     const token = await jwt.sign({ id: value.rows[0]}, process.env.SECRET_KEY, {
       expiresIn: 86400, // expires in 24 hours
     });
 
     res.status(201).json({
       status: 201,
-      message: 'success',
+      message: 'succesfully logged In',
       data: {
-        token,
-        email: user.email,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        address: user.address,
-        isadmin: user.isadmin,
+        token
+
       },
     });
 
 
   }
+}
   }
+
   }
 
 export default UserDb;
