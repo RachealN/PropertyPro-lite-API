@@ -1,6 +1,3 @@
-// const Joi = require('joi');
-
-// const properties = require('../controllers/property');
 import Joi from 'joi';
 
 class Validations {
@@ -46,9 +43,6 @@ class Validations {
 return Joi.validate(postData,schema);
 }
 
-
 }
-
 const validate = new Validations();
-// module.exports = validate;
 export default validate;
