@@ -46,7 +46,7 @@ class UserDb {
   }
 
   static async loginUser(req,res){
-    console.log('-----------------------------')
+    
     const { error } = Validations.loginValidation(req.body);
     if (error) {
       return res.status(400).json({
