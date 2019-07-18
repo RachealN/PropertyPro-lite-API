@@ -43,29 +43,45 @@ class PropertyDb{
             'message': error.details[0].message,
         });
         }else{
-            const updateData = [req.body.price, req.body.city, req.body.state, req.body.address, req.body.status,req.body.type];
-            console.log("++++++++",updateData)
-            const {rows}  =  await pro.updateAdvert (updateData);
-            console.log("--------",rows)
-            
-            const patchData = rows;
-            
-            
+            const {price,city,state,address,status,type} = req.body
+            const updateData = [price,city,state,address,status,type];
+            const updatedData  =  await pro.updateAdvert (updateData,req.params.id);
+        
             return res.status(201).json({
                 status: 201,
                 message: 'success',
-                data: {
-                price: updateData[0],
-                city: updateData[1],
-                state: updateData[2],
-                address: updateData[3],
-                phonenumber: updateData[4],
-                status:updateData[5],
-                type:updateData[6],
-                },
+                data:updatedData.rows[0]
+                    
+                
 
         });
         }
+
+}
+
+    static async markProperty(req, res){
+            
+        const { error } = Validations.markValidation(req.body);
+        if (error) {    
+        return res.status(400).json ({
+            'status': 400,
+            'message': error.details[0].message,
+        });
+        }else{
+            const {status} = req.body
+            const markData = [status];
+            const marked =  await pro.markPro (markData,req.params.id);
+
+            return res.status(201).json({
+                status: 201,
+            message: 'success',
+            data: {
+            status: marked.rows[0]
+            
+            },
+
+    });
+    }
 
 }
 }
