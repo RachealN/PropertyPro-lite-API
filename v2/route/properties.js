@@ -6,6 +6,7 @@ const app = express();
 
 routee.post('/api/property', PropertyDb.createProperty);
 routee.patch('/api/property/:id', PropertyDb.updateProperty);
+routee.patch('/api/property/:id/sold', PropertyDb.markProperty);
 
 
 export default routee;

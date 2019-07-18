@@ -27,11 +27,19 @@ const checkEmail = async(data) => {
   
 };
 
-const updateAdvert = async(data) => {
+const updateAdvert = async(data,id) => {
   const updateId = 
-  `UPDATE properties set '${data.price}= price,'${data.city}=city,'${data.address}=address,'${data.state}=state,'${data.status}=status,'${data.type}=type
-   WHERE id =$1 '`;
-  try { return await pool.query(updateId ); } catch (error) {
+  `UPDATE properties set price=$1,city=$2,state=$3,address=$4,status=$5,type=$6 WHERE id = '${id}' RETURNING * `;
+  try { return await pool.query(updateId,data); } catch (error) {
+    console.log(error)
+    return (0);
+  }
+};
+
+const markPro = async(marks,id) => {
+  const mark = `UPDATE properties set status=$1 WHERE id ='${id}' RETURNING *`;
+  try {
+   return await pool.query(mark,marks ); } catch (error) {
     console.log(error)
     return (0);
   }
@@ -46,7 +54,8 @@ const propertySchema = (values) => {
 };
 
 
-export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert};
+export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert,markPro};
+
 
 
 

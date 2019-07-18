@@ -26,6 +26,13 @@ class Validations {
     return Joi.validate(signinData,schema)
 }
 
+  markValidation(markPro){
+    const schema = {
+      status:Joi.string().min(4).required()
+    };
+  return Joi.validate(markPro,schema)
+}
+
   createValidation(postData){
     const schema = {
       status:Joi.string().min(4).required(),
