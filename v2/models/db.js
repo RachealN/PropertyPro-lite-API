@@ -33,11 +33,10 @@ export const createTables = async () => {
   city      VARCHAR(100)     NOT NULL,
   state     VARCHAR(25)     NOT NULL,
   address    VARCHAR(255)     NOT NULL,
-  phoneNumber  INTEGER  NOT NULL,
   status VARCHAR(100)  DEFAULT 'availlable',
-  reason     VARCHAR(255)     NOT NULL,
-  description      VARCHAR(255)     NOT NULL,
+  type VARCHAR(255) NOT NULL,
   createdOn  TIMESTAMP DEFAULT NOW())`;
+
 
 
   await pool.query(userTables, (err, res) => {

@@ -17,6 +17,28 @@ class Validations {
     return Joi.validate(postData, schema);
   }
 
+  //login credentials
+  loginValidation(signinData){
+    const schema = {
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).max(15).required(),
+    };
+    return Joi.validate(signinData,schema)
+}
+
+  createValidation(postData){
+    const schema = {
+      status:Joi.string().min(4).required(),
+      price:Joi.number().min(0).required(),
+      state:Joi.string().min(3).required(),
+      city:Joi.string().min(3).required(),
+      address:Joi.string().min(5).required(),
+      type:Joi.string().min(3).required()
+    
+  };
+return Joi.validate(postData,schema);
+}
+
 
 }
 
