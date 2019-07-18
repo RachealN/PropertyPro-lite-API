@@ -24,6 +24,17 @@ const checkEmail = async(data) => {
     console.log(error)
     return (0);
   }
+  
+};
+
+const updateAdvert = async(data) => {
+  const updateId = 
+  `UPDATE properties set '${data.price}= price,'${data.city}=city,'${data.address}=address,'${data.state}=state,'${data.status}=status,'${data.type}=type
+   WHERE id =$1 '`;
+  try { return await pool.query(updateId ); } catch (error) {
+    console.log(error)
+    return (0);
+  }
 };
 
 
@@ -34,5 +45,8 @@ const propertySchema = (values) => {
   }
 };
 
-export default {Userschema,checkEmail,propertySchema};
+
+export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert};
+
+
 
