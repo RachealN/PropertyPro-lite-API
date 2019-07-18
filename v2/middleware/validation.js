@@ -17,6 +17,15 @@ class Validations {
     return Joi.validate(postData, schema);
   }
 
+  //login credentials
+  loginValidation(signinData){
+    const schema = {
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).max(15).required(),
+    };
+    return Joi.validate(signinData,schema)
+}
+
 
 }
 
