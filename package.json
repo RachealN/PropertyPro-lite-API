@@ -11,10 +11,10 @@
   "scripts": {
     "test": "NODE_ENV=test  npm run drop && npm run create nyc mocha",
     "dev-start": "NODE_ENV=development npm run create && nodemon  --exec babel-node server.js",
-    "build":  "NODE_ENV=production babel src --out-dir build",
+    "build": "NODE_ENV=production babel src --out-dir build",
     "lint": "eslint src/js",
     "create": "babel-node ./v2/models/db createTables",
-    "drop":"babel-node  ./v2/models/db dropTables",
+    "drop": "babel-node  ./v2/models/db dropTables",
     "coveralls": "npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -53,12 +53,10 @@
     "pg": "^7.11.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cli": "^1.0.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.18.0",
     "mocha": "^6.1.4",
     "mochawesome": "^4.0.1"
   }

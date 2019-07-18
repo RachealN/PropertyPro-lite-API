@@ -5,10 +5,13 @@ import Pool from './v2/models/db';
 
 
 import routes from './src/routes/routes';
+import route from './v2/route/users';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
+
+app.use('/', route);
 
 app.use('/', routes);
 app.get('/', (req, res) => res.status(200).send({ message: 'Welcome to PropertyPro lite app' }));

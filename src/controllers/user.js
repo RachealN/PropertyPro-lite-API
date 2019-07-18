@@ -2,7 +2,6 @@ import {Users,userArray} from '../models/user';
 import Validations from '../middleware/validation';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import omit from 'omit'
 
 
 
