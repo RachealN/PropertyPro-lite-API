@@ -33,4 +33,4 @@ const propertySchema = (values) => {
   }
 };
 
-export default {Userschema,checkEmail,propertySchema};
+export default {Userschema,checkEmail,propertySchema,loginSchema};
