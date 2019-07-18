@@ -1,15 +1,16 @@
 import express from 'express';
 import PropertyDb from '../controllers/properties';
+import Authorization from '../middleware/auth';
 
 const routee = express.Router();
 const app = express();
 
-routee.post('/api/property', PropertyDb.createProperty);
-routee.patch('/api/property/:id', PropertyDb.updateProperty);
-routee.patch('/api/property/:id/sold', PropertyDb.markProperty);
-routee.get('/api/property/:id', PropertyDb.getProperty);
-routee.delete('/api/property/:id', PropertyDb.deleteProperty);
-routee.get('/api/property', PropertyDb.getAllProperty);
+routee.post('/api/property',Authorization.verifyToken,PropertyDb.createProperty,);
+routee.patch('/api/property/:id',Authorization.verifyToken, PropertyDb.updateProperty);
+routee.patch('/api/property/:id/sold',Authorization.verifyToken, PropertyDb.markProperty);
+routee.get('/api/property/:id', Authorization.verifyToken,PropertyDb.getProperty);
+routee.delete('/api/property/:id', Authorization.verifyToken,PropertyDb.deleteProperty);
+routee.get('/api/property',Authorization.verifyToken,PropertyDb.getAllProperty,Authorization);
 
 
 
