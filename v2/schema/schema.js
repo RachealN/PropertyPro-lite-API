@@ -24,6 +24,7 @@ const checkEmail = async(data) => {
     console.log(error)
     return (0);
   }
+  
 };
 
 const updateAdvert = async(data,id) => {
@@ -67,6 +68,7 @@ const markPro = async(markData,id) => {
   }
 };
 
+
 const propertySchema = (values) => {
   const propQuery = 'INSERT INTO properties(price,city, state, address, status,type) VALUES($1,$2,$3,$4,$5,$6) RETURNING *';
   try { return pool.query(propQuery, values); } catch (error) {
@@ -74,4 +76,14 @@ const propertySchema = (values) => {
   }
 };
 
+
 export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert,markPro,getProperty,deleteProp,getAllProperty};
+
+
+
+
+
+
+
+
+
