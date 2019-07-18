@@ -1,5 +1,6 @@
 import pro from '../schema/schema';
 import Validations from '../middleware/validation';
+import Authorization from '../middleware/auth';
 
 
 class PropertyDb{
@@ -12,6 +13,7 @@ class PropertyDb{
             'message': error.details[0].message,
         });
         }else{
+            
            
         const data = [req.body.price, req.body.city, req.body.state, req.body.address, req.body.status,req.body.type];
         const {rows}  =  await pro.propertySchema (data);
