@@ -58,8 +58,19 @@ class PropertyDb{
         }
 
 }
+        static async getAllProperty(req, res){
+                const get_all =  await pro.getAllProperty ();
+            
+                return res.status(201).json({
+                    status: 201,
+                    message: 'success',
+                    data:get_all
+            });
+        
 
-    static async markProperty(req, res){
+        }
+
+        static async markProperty(req, res){
             
         const { error } = Validations.markValidation(req.body);
         if (error) {    
@@ -100,7 +111,18 @@ static async getProperty(req, res){
 
 });
 
+}
+static async deleteProperty(req, res){
+    await pro.deleteProp(req.params.id);
+
+    return res.status(201).json({
+        status: 201,
+    message: 'deleted succesfully',
+    data: {},
+
+});
 
 }
+
 }
 export default PropertyDb;

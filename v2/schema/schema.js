@@ -37,18 +37,32 @@ const updateAdvert = async(data,id) => {
 };
 
 const getProperty = async(getdata,id) => {
-  const getId = 
-  `SELECT * FROM properties  WHERE id = '${id}' RETURNING * `;
+  const getId = `SELECT * FROM properties  WHERE id = '${id}' RETURNING * `;
   try { return await pool.query(getdata,data); } catch (error) {
     console.log(error)
     return (0);
   }
 };
 
-const markPro = async(marks,id) => {
+const getAllProperty = async() => {
+  const getPro = `SELECT * FROM properties `;
+  try { return await pool.query(getPro); } catch (error) {
+    return (0);
+  }
+};
+
+const deleteProp = async(id) => {
+  const getId = `DELETE FROM properties  WHERE id = '${id}' RETURNING *`;
+  try { return await pool.query(getId); } catch (error) {
+    console.log(error)
+    return (0);
+  }
+};
+
+const markPro = async(markData,id) => {
   const mark = `UPDATE properties set status=$1 WHERE id ='${id}' RETURNING *`;
   try {
-   return await pool.query(mark,marks ); } catch (error) {
+   return await pool.query(mark,markData ); } catch (error) {
     console.log(error)
     return (0);
   }
@@ -62,7 +76,9 @@ const propertySchema = (values) => {
   }
 };
 
-export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert,markPro,getProperty};
+
+export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert,markPro,getProperty,deleteProp,getAllProperty};
+
 
 
 
