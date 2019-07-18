@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import pool from '../models/db';
 import schemaValues from '../schema/schema';
 import Validations from '../middleware/validation';
 

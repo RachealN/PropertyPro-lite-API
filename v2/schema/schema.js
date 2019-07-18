@@ -26,4 +26,13 @@ const checkEmail = async(data) => {
   }
 };
 
-export default {Userschema,checkEmail,loginSchema};
+
+const propertySchema = (values) => {
+  const propQuery = 'INSERT INTO properties(price,city, state, address, status,type) VALUES($1,$2,$3,$4,$5,$6) RETURNING *';
+  try { return pool.query(propQuery, values); } catch (error) {
+    return (0);
+  }
+};
+
+export default {Userschema,checkEmail,propertySchema};
+
