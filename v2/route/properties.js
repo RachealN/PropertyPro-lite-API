@@ -8,6 +8,9 @@ routee.post('/api/property', PropertyDb.createProperty);
 routee.patch('/api/property/:id', PropertyDb.updateProperty);
 routee.patch('/api/property/:id/sold', PropertyDb.markProperty);
 routee.get('/api/property/:id', PropertyDb.getProperty);
+routee.delete('/api/property/:id', PropertyDb.deleteProperty);
+routee.get('/api/property', PropertyDb.getAllProperty);
+
 
 
 export default routee;
