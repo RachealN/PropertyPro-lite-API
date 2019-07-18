@@ -1,4 +1,4 @@
-import h from '../schema/schema';
+import pro from '../schema/schema';
 import Validations from '../middleware/validation';
 
 
@@ -14,12 +14,13 @@ class PropertyDb{
         }else{
            
         const data = [req.body.price, req.body.city, req.body.state, req.body.address, req.body.status,req.body.type];
-        const {rows}  =  await h.propertySchema (data);
+        const {rows}  =  await pro.propertySchema (data);
         const prop = rows[0];
         res.status(201).json({
             status: 201,
             message: 'success',
             data: {
+              id:prop.id,
               price: prop.price,
               city: prop.city,
               state: prop.state,
