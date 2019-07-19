@@ -12,17 +12,6 @@ chai.use(require('chai-http'));
 
 
 describe('All property routes', () => {
-    it('should return all properties',() =>{
-        chai.request(server)
-        .get('/api/property')
-        .set('Authorization', 'Bearer ' + token)
-        .end((err,res) =>{
-            chai.expect(res.body).to.be.a('object');
-            chai.expect(res.body).to.have.property('status');
-            chai.expect(res.type).to.be.equal('application/json');
-            
-        });
-    });
 
     it('should return a specific property advert', () =>{
         chai.request(server)
@@ -59,8 +48,7 @@ describe('All property routes', () => {
             chai.expect(res.type).to.be.equal('application/json');
         });
     });
-
-    
+    });
     it('should post property',() =>{
         chai.request(server)
         .post('/api/property')
@@ -73,18 +61,7 @@ describe('All property routes', () => {
         });
     });
 
-    it('should fetch the property', (done) => {
-        chai.request(server)
-          .patch('/api/property/1/sold')
-          .set('Authorization', 'Bearer ' + token)
-          .send()
-          .end((err, res) => {
-            chai.expect(res.body).to.be.a('object');
-            chai.expect(res.statusCode).to.be.equal(200);
-            chai.expect(res.body).to.have.property('status');
-            chai.expect(res.type).to.be.equal('application/json');
-          });
-      });
+    
     
 
     it('should return updated property data',() =>{
@@ -99,17 +76,46 @@ describe('All property routes', () => {
         });
     });
 
-it('should get the property', (done) => {
-    chai.request(server)
-      .get('/api/property/1')
-      .set('Authorization', 'Bearer ' + token)
-      .send()
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-        res.body.status.should.equal(200);
-        return done();
-      });
-  });
+
+
+    it('Get all properties', () =>{
+        chai.request(server)
+        .get('/api/property')
+        .set('Authorization', 'Bearer ' + token)
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.body).to.have.property('status');
+            chai.expect(res.type).to.be.equal('application/json');
+        });
+    });
+
+    it('update properties', () =>{
+        chai.request(server)
+        .get('/api/property/:1')
+        .set('Authorization', 'Bearer ' + token)
+        .send(propertyDetails)
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.body).to.have.property('status');
+            chai.expect(res.type).to.be.equal('application/json');
+        });
+    });
+
+    
+    it('mark property as sold', () =>{
+        chai.request(server)
+        .get('/api/property/:1/sold')
+        .set('Authorization', 'Bearer ' + token)
+        .send(propertyDetails)
+        .end((err,res) =>{
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.body).to.have.property('status');
+            chai.expect(res.type).to.be.equal('application/json');
+        });
+    });
+
+
+
+    
+
 

@@ -31,7 +31,7 @@ class UserDb {
 
     res.status(201).json({
       status: 201,
-      message: 'success',
+      message: 'Registered succesfully',
       data: {
         token,
         email: user.email,

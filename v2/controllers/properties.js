@@ -63,8 +63,8 @@ class PropertyDb{
         static async getAllProperty(req, res){
                 const get_all =  await pro.getAllProperty ();
             
-                return res.status(201).json({
-                    status: 201,
+                return res.status(200).json({
+                    status: 200,
                     message: 'success',
                     data:get_all
             });
@@ -103,8 +103,8 @@ static async getProperty(req, res){
         const markData = [status];
         const marked =  await pro.markPro (markData,req.params.id);
 
-        return res.status(201).json({
-            status: 201,
+        return res.status(200).json({
+            status: 200,
         message: 'success',
         data: {
         status: marked.rows[0]
@@ -117,8 +117,8 @@ static async getProperty(req, res){
 static async deleteProperty(req, res){
     await pro.deleteProp(req.params.id);
 
-    return res.status(201).json({
-        status: 201,
+    return res.status(200).json({
+        status: 200,
     message: 'deleted succesfully',
     data: {},
 

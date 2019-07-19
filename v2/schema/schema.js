@@ -34,9 +34,9 @@ const updateAdvert = async(data,id) => {
   }
 };
 
-const getProperty = async(getdata,id) => {
+const getProperty = async(id) => {
   const getId = `SELECT * FROM properties  WHERE id = '${id}' RETURNING * `;
-  try { return await pool.query(getdata,data); } catch (error) {
+  try { return await pool.query(getId); } catch (error) {
     console.log(error)
     return (0);
   }
