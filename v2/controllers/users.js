@@ -67,8 +67,8 @@ class UserDb {
       expiresIn: 86400, // expires in 24 hours
     });
 
-    res.status(201).json({
-      status: 201,
+    res.status(200).json({
+      status: 200,
       message: 'succesfully logged In',
       data: {
         token

@@ -2,13 +2,13 @@ language: node_js
 node_js: 
    "10.7.0"
 before_script:
-  - 
+  - psql -c 'CREATE DATABASE propertyprotest;' -U postgres
 
 script:
 - npm run test
 
 after_success:
-- npm run coveralls
+- npm install coveralls && npm run coverage
 
 nofitication:
 email:false
