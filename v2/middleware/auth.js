@@ -37,7 +37,7 @@ class Authorization {
             }
             //function to check if the user is admin
             static requireAdmin(req,res,next){
-                const isAdmin = false
+                const isAdmin = true
             //if everything is okay, save to request for use in the other routes
                 if(req.body.isAdmin){
                     return next();
