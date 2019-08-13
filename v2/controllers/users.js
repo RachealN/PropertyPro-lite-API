@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import schemaValues from '../schema/schema';
+import schemaValues from '../schema/useSchema';
 import Validations from '../middleware/validation';
 
 
@@ -8,7 +8,6 @@ class UserDb {
   // create user account
   static async registerUsers(req, res) {
     const { error } = Validations.registerValidations(req.body);
-  
     if (error) {
       return {
         'status': 400,
@@ -16,12 +15,11 @@ class UserDb {
       };
     }
     const value = await schemaValues.checkEmail(req.body.email);
+    // console.log(value.rows.length)
     if (value.rows.length > 0) {
       return res.status(400).send({ 'status': 400, 'error': 'User already exists' });
-      
     }
-    let hashedPassword = bcrypt.hashSync(req.body.password, 8);
-    req.body.password = hashedPassword
+    const {password:hide} = req.body
     const data = [req.body.firstname, req.body.lastname, req.body.address, req.body.email, req.body.password, req.body.isadmin];
     const {rows}  =  await schemaValues.Userschema(data);
     const user = rows[0];
@@ -31,20 +29,19 @@ class UserDb {
 
     res.status(201).json({
       status: 201,
-      message: 'Registered succesfully',
+      message: 'success',
       data: {
         token,
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
         address: user.address,
+        password:bcrypt.hashSync(hide,10),
         isadmin: user.isadmin
       },
     });
 
-
   }
-
   static async loginUser(req,res){
     
     const { error } = Validations.loginValidation(req.body);
@@ -57,10 +54,11 @@ class UserDb {
 
     const value = await schemaValues.checkEmail(req.body.email);
     const passwordIsValid = bcrypt.compareSync(req.body.password, value.rows[0]['password']);
-    if (!passwordIsValid) {
-      return res.status(400).send({ 'status': 400, 'error': 'password is invalid' });
-    }else{
-    const {rows}  =  await schemaValues.loginSchema(req.body);
+    // if (!passwordIsValid) {
+    //   return res.status(400).send({ 'status': 400, 'error': 'password is invalid' });
+    // }else
+    {
+    const {rows}  =  await schemaValues.loginSchema(req.body,);
     const user = rows[0];
     console.log(user);
     const token = await jwt.sign({ id: value.rows[0]}, process.env.SECRET_KEY, {

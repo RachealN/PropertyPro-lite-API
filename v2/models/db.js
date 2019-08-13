@@ -35,6 +35,7 @@ export const createTables = async () => {
   address    VARCHAR(255)     NOT NULL,
   status VARCHAR(100)  DEFAULT 'availlable',
   type VARCHAR(255) NOT NULL,
+  image_url TEXT NOT NULL,
   createdOn  TIMESTAMP DEFAULT NOW())`;
 
 

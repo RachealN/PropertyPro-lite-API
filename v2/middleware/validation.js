@@ -6,7 +6,7 @@ class Validations {
     const schema = {
       firstname: Joi.string().min(3).max(15).required(),
       lastname: Joi.string().min(3).max(25).required(),
-      address: Joi.string().min(5).max(25).required(),
+      address: Joi.string().min(3).max(25).required(),
       email: Joi.string().email().required(),
       password: Joi.string().min(3).max(15).required(),
       isadmin: Joi.bool().valid(true, false).required(),
@@ -32,11 +32,11 @@ class Validations {
 
   createValidation(postData){
     const schema = {
-      status:Joi.string().min(4).required(),
-      price:Joi.number().min(0).required(),
+      status:Joi.string().min(3).required(),
+      price:Joi.number().min(3).required(),
       state:Joi.string().min(3).required(),
       city:Joi.string().min(3).required(),
-      address:Joi.string().min(5).required(),
+      address:Joi.string().min(3).required(),
       type:Joi.string().min(3).required()
     
   };

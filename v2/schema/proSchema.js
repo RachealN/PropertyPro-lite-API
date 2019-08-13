@@ -1,29 +1,17 @@
 import pool from '../models/db';
 
 
-const Userschema = async (values) => {
-  const query = 'INSERT INTO users(firstName,lastName, address, email, password, isAdmin) VALUES($1,$2,$3,$4,$5,$6) RETURNING *';
-  try { return await pool.query(query, values); } catch (error) {
-    return (0);
-  }
-};
 
-const loginSchema = async(loginValues) => {
-  const loginQuery = `SELECT * FROM users WHERE email  = '${loginValues.email}' and password= '${loginValues.password}'` ;
-  try { return await pool.query(loginQuery); } catch (error) {
+const checkImage = async(pic) =>{
+  const queryImage = `SELECT * FROM properties WHERE image_url = '${pic}'`;
+  try { return await pool.query(queryImage); } catch (error) {
     console.log(error)
     return (0);
   }
 };
 
 
-const checkEmail = async(data) => {
-  const queryEmail = `SELECT * FROM users WHERE email ='${data}'`;
-  try { return await pool.query(queryEmail); } catch (error) {
-    console.log(error)
-    return (0);
-  }
-};
+
 
 const updateAdvert = async(data,id) => {
   const updateId = 
@@ -43,8 +31,9 @@ const getProperty = async(id) => {
 };
 
 const getAllProperty = async() => {
-  const getPro = `SELECT * FROM properties `;
+  const getPro = `SELECT * FROM properties * `;
   try { return await pool.query(getPro); } catch (error) {
+    console.log(error)
     return (0);
   }
 };
@@ -57,10 +46,10 @@ const deleteProp = async(id) => {
   }
 };
 
-const markPro = async(markData,id) => {
-  const mark = `UPDATE properties set status=$1 WHERE id ='${id}' RETURNING *`;
-  try {
-   return await pool.query(mark,markData ); } catch (error) {
+
+const markStatus  = async(marked,id) => {
+  const markId = `UPDATE properties set status=$1 WHERE id = '${id}' RETURNING * `;
+  try { return await pool.query(markId,marked); } catch (error) {
     console.log(error)
     return (0);
   }
@@ -73,4 +62,4 @@ const propertySchema = (values) => {
   }
 };
 
-export default {Userschema,checkEmail,propertySchema,loginSchema,updateAdvert,markPro,getProperty,deleteProp,getAllProperty};
+export default {checkImage,propertySchema,updateAdvert,markStatus,getProperty,deleteProp,getAllProperty};
